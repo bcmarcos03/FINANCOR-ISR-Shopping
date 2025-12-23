@@ -4,8 +4,9 @@ sap.ui.define([
 	"sap/m/MessageToast",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/Fragment",
-	"sap/ui/core/format/DateFormat"
-], function (BaseController, MessageBox, MessageToast, JSONModel, Fragment, DateFormat) {
+	"sap/ui/core/format/DateFormat",
+	"sap/ui/model/odata/v2/ODataModel"
+], function (BaseController, MessageBox, MessageToast, JSONModel, Fragment, DateFormat, ODataModel) {
 	"use strict";
 
 	const LOCAL_DB_NAME = "financorDB";
@@ -65,7 +66,17 @@ sap.ui.define([
 
 			this.getView().setBusy(true);
 			try {				
-				let oModel = this.getOwnerComponent().getModel();
+				// Create OData model on-demand (only when syncing)
+			let oModel = this.getOwnerComponent().getModel();
+			if (!oModel) {
+				const oManifest = this.getOwnerComponent().getManifestEntry("/sap.app/dataSources/mainService");
+				const sServiceUrl = oManifest.uri;
+				oModel = new ODataModel({
+					serviceUrl: sServiceUrl,
+					useBatch: true
+				});
+				this.getOwnerComponent().setModel(oModel);
+			}
 			let uploadResult = { success: 0, failed: 0, errors: [] };
 				
 

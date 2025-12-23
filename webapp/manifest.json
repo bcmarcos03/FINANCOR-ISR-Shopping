@@ -68,11 +68,6 @@
         "settings": {
           "bundleName": "com.financor.sd.shoppingapp.i18n.i18n"
         }
-      },
-      "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": {}
       }
     },
     "resources": {
