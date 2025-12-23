@@ -1,0 +1,212 @@
+[
+  {
+    "SyncKey": "Categories_001_COMP001_A01_D01_F01_C01",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C01",
+    "CategoryText": "Massa Seca"
+  },
+  {
+    "SyncKey": "Categories_001_COMP001_A01_D01_F01_C02",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C02",
+    "CategoryText": "Arroz Branco"
+  },
+  {
+    "SyncKey": "Categories_001_COMP001_A01_D01_F02_C03",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F02",
+    "Category": "C03",
+    "CategoryText": "Atum"
+  },
+  {
+    "SyncKey": "Categories_001_COMP001_A01_D02_F03_C04",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D02",
+    "Family": "F03",
+    "Category": "C04",
+    "CategoryText": "Leite"
+  },
+  {
+    "SyncKey": "Categories_001_COMP001_A02_D03_F04_C05",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A02",
+    "Division": "D03",
+    "Family": "F04",
+    "Category": "C05",
+    "CategoryText": "Cola Regular"
+  },
+  {
+    "SyncKey": "Categories_001_COMP001_A02_D04_F05_C06",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A02",
+    "Division": "D04",
+    "Family": "F05",
+    "Category": "C06",
+    "CategoryText": "Cerveja Lager"
+  },
+  {
+    "SyncKey": "Categories_001_COMP001_A03_D05_F06_C07",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A03",
+    "Division": "D05",
+    "Family": "F06",
+    "Category": "C07",
+    "CategoryText": "Detergente Roupa"
+  },
+  {
+    "SyncKey": "Categories_001_COMP002_A01_D01_F01_C01",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C01",
+    "CategoryText": "Massa Seca"
+  },
+  {
+    "SyncKey": "Categories_001_COMP002_A01_D01_F01_C02",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C02",
+    "CategoryText": "Arroz Branco"
+  },
+  {
+    "SyncKey": "Categories_001_COMP002_A01_D01_F02_C03",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F02",
+    "Category": "C03",
+    "CategoryText": "Atum"
+  },
+  {
+    "SyncKey": "Categories_001_COMP002_A01_D02_F03_C04",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D02",
+    "Family": "F03",
+    "Category": "C04",
+    "CategoryText": "Leite"
+  },
+  {
+    "SyncKey": "Categories_001_COMP002_A02_D03_F04_C05",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A02",
+    "Division": "D03",
+    "Family": "F04",
+    "Category": "C05",
+    "CategoryText": "Cola Regular"
+  },
+  {
+    "SyncKey": "Categories_001_COMP002_A02_D04_F05_C06",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A02",
+    "Division": "D04",
+    "Family": "F05",
+    "Category": "C06",
+    "CategoryText": "Cerveja Lager"
+  },
+  {
+    "SyncKey": "Categories_001_COMP002_A03_D05_F06_C07",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A03",
+    "Division": "D05",
+    "Family": "F06",
+    "Category": "C07",
+    "CategoryText": "Detergente Roupa"
+  },
+  {
+    "SyncKey": "Categories_001_COMP003_A01_D01_F01_C01",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C01",
+    "CategoryText": "Massa Seca"
+  },
+  {
+    "SyncKey": "Categories_001_COMP003_A01_D01_F01_C02",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C02",
+    "CategoryText": "Arroz Branco"
+  },
+  {
+    "SyncKey": "Categories_001_COMP003_A01_D01_F02_C03",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F02",
+    "Category": "C03",
+    "CategoryText": "Atum"
+  },
+  {
+    "SyncKey": "Categories_001_COMP003_A01_D02_F03_C04",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D02",
+    "Family": "F03",
+    "Category": "C04",
+    "CategoryText": "Leite"
+  },
+  {
+    "SyncKey": "Categories_001_COMP003_A02_D03_F04_C05",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A02",
+    "Division": "D03",
+    "Family": "F04",
+    "Category": "C05",
+    "CategoryText": "Cola Regular"
+  },
+  {
+    "SyncKey": "Categories_001_COMP003_A02_D04_F05_C06",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A02",
+    "Division": "D04",
+    "Family": "F05",
+    "Category": "C06",
+    "CategoryText": "Cerveja Lager"
+  },
+  {
+    "SyncKey": "Categories_001_COMP003_A03_D05_F06_C07",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A03",
+    "Division": "D05",
+    "Family": "F06",
+    "Category": "C07",
+    "CategoryText": "Detergente Roupa"
+  }
+]

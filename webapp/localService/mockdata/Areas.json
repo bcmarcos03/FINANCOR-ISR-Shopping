@@ -1,0 +1,65 @@
+[
+  {
+    "SyncKey": "Areas_001_COMP001_A01",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "AreaText": "Alimentação"
+  },
+  {
+    "SyncKey": "Areas_001_COMP001_A02",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A02",
+    "AreaText": "Bebidas"
+  },
+  {
+    "SyncKey": "Areas_001_COMP001_A03",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A03",
+    "AreaText": "Higiene e Limpeza"
+  },
+  {
+    "SyncKey": "Areas_001_COMP002_A01",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "AreaText": "Alimentação"
+  },
+  {
+    "SyncKey": "Areas_001_COMP002_A02",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A02",
+    "AreaText": "Bebidas"
+  },
+  {
+    "SyncKey": "Areas_001_COMP002_A03",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A03",
+    "AreaText": "Higiene e Limpeza"
+  },
+  {
+    "SyncKey": "Areas_001_COMP003_A01",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "AreaText": "Alimentação"
+  },
+  {
+    "SyncKey": "Areas_001_COMP003_A02",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A02",
+    "AreaText": "Bebidas"
+  },
+  {
+    "SyncKey": "Areas_001_COMP003_A03",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A03",
+    "AreaText": "Higiene e Limpeza"
+  }
+]

@@ -1,0 +1,175 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Collect.ProductPriceEntryForm"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+>
+    <Page
+        id="productPriceEntryPage"
+        title="{i18n>ProductEntryTitle}"
+        showNavButton="false"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press=".onNavBack"
+                        tooltip="{i18n>BackTooltip}"
+                    />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>ProductEntryTitle}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        text="{i18n>JustifyNoCollectionBtn}"
+                        type="Transparent"
+                        enabled="false"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <f:SimpleForm
+                    id="productPriceForm"
+                    editable="true"
+                    layout="ColumnLayout"
+                    labelSpanXL="4"
+                    labelSpanL="4"
+                    labelSpanM="12"
+                    labelSpanS="12"
+                    emptySpanXL="0"
+                    emptySpanL="0"
+                    emptySpanM="0"
+                    emptySpanS="0"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1"
+                >
+                    <f:content>
+                        <Label text="{i18n>DescriptionLabel}" required="true" />
+                        <Input
+                            id="inputDescription"
+                            value="{formModel>/materialDescription}"
+                            placeholder="{i18n>DescriptionLabel}"
+                        />
+
+                        <Label text="{i18n>EANLabel}" />
+                        <Input
+                            id="inputEAN"
+                            value="{formModel>/ean}"
+                            type="Number"
+                            placeholder="{i18n>EANLabel}"
+                        />
+
+                        <Label text="{i18n>BrandLabel}" />
+                        <Select
+                            id="selectBrand"
+                            selectedKey="{formModel>/brand}"
+                            forceSelection="false"
+                        >
+                            <core:Item key="" text="" />
+                            <core:Item key="Milaneza" text="Milaneza" />
+                            <core:Item key="Cigala" text="Cigala" />
+                            <core:Item key="Bom Petisco" text="Bom Petisco" />
+                            <core:Item key="Mimosa" text="Mimosa" />
+                            <core:Item key="Agros" text="Agros" />
+                            <core:Item key="Coca-Cola" text="Coca-Cola" />
+                            <core:Item key="Sagres" text="Sagres" />
+                            <core:Item key="Skip" text="Skip" />
+                            <core:Item key="Pingo Doce" text="Pingo Doce" />
+                            <core:Item key="Outro" text="Outro" />
+                        </Select>
+
+                        <Label text="{i18n>NormalPriceLabel}" required="true" />
+                        <Input
+                            id="inputNormalPrice"
+                            value="{formModel>/normalPrice}"
+                            type="Number"
+                            description="EUR"
+                            placeholder="0.00"
+                        />
+
+                        <Label text="{i18n>PromoPriceLabel}" />
+                        <Input
+                            id="inputPromoPrice"
+                            value="{formModel>/promoPrice}"
+                            type="Number"
+                            description="EUR"
+                            placeholder="0.00"
+                        />
+
+                        <Label text="{i18n>PromoTypeLabel}" />
+                        <Select
+                            id="selectPromoType"
+                            selectedKey="{formModel>/promoType}"
+                            forceSelection="false"
+                        >
+                            <core:Item key="" text="" />
+                            <core:Item key="desconto" text="Desconto Direto" />
+                            <core:Item key="leve3pague2" text="Leve 3 Pague 2" />
+                            <core:Item key="cartao" text="Desconto Cartão" />
+                            <core:Item key="pack" text="Pack Promocional" />
+                            <core:Item key="outro" text="Outro" />
+                        </Select>
+
+                        <Label text="{i18n>PromoPeriodLabel}" />
+                        <DateRangeSelection
+                            id="dateRangePromo"
+                            dateValue="{formModel>/promoStartDate}"
+                            secondDateValue="{formModel>/promoEndDate}"
+                            displayFormat="dd/MM/yyyy"
+                        />
+
+                        <Label text="{i18n>ObservationsLabel}" />
+                        <TextArea
+                            id="textAreaObservations"
+                            value="{formModel>/observations}"
+                            rows="4"
+                            growing="true"
+                            growingMaxLines="8"
+                            width="100%"
+                        />
+
+                        <Label text="{i18n>LiquidContentLabel}" />
+                        <Input
+                            id="inputLiquidContent"
+                            value="{formModel>/liquidContent}"
+                            type="Number"
+                            placeholder="0"
+                        />
+                        <Select
+                            id="selectLiquidContentUnit"
+                            selectedKey="{formModel>/liquidContentUnit}"
+                        >
+                            <core:Item key="L" text="L" />
+                            <core:Item key="ml" text="ml" />
+                            <core:Item key="Kg" text="Kg" />
+                            <core:Item key="g" text="g" />
+                            <core:Item key="un" text="un" />
+                        </Select>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    id="btnContinue"
+                    text="{i18n>ContinueBtn}"
+                    type="Emphasized"
+                    icon="sap-icon://navigation-right-arrow"
+                    iconFirst="false"
+                    press=".onContinue"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

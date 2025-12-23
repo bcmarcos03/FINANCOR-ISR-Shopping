@@ -1,0 +1,55 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Collect.ProductGroupList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    displayBlock="true">
+
+    <Page
+        id="productGroupListPage"
+        title="5. Grupo de Produtos - {viewModel>/competitorName}"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button 
+                        icon="sap-icon://nav-back" 
+                        press=".onNavBack" 
+                        tooltip="{i18n>BackTooltip}" 
+                    />
+                    <Button 
+                        icon="sap-icon://home" 
+                        press=".onNavToHome" 
+                        tooltip="{i18n>HomeTooltip}" 
+                        type="Transparent"
+                    />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>ProductGroupTitle}" />
+                </contentMiddle>
+                <contentRight>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <List
+                id="idListaGenerica"
+                items="{listModel>/ListData}"
+                mode="SingleSelectMaster"
+                selectionChange="onProductGroupSelect">
+                
+                <StandardListItem
+                    title="{listModel>ProductGroup}" 
+                    description="{listModel>ProductGroupText}" 
+                    type="Navigation"                
+                    info="{listModel>numberOfProducts}" 
+                    infoState="None" 
+                />
+            </List>
+        </content>
+    </Page>
+</mvc:View>

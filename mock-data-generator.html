@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Data Generator - FINANCOR Shopping</title>
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@9.0.0/dist/pouchdb.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0070f3;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        button {
+            background-color: #0070f3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0051cc;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #log {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 5px 0;
+        }
+        .log-success {
+            color: #28a745;
+        }
+        .log-error {
+            color: #dc3545;
+        }
+        .log-info {
+            color: #0070f3;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0070f3;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mock Data Generator</h1>
+        <p class="subtitle">Generate dummy data for FINANCOR ISR Shopping App</p>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="competitorCount">0</div>
+                <div class="stat-label">Competitors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="productCount">0</div>
+                <div class="stat-label">Products</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalCount">0</div>
+                <div class="stat-label">Total Records</div>
+            </div>
+        </div>
+
+        <button id="generateBtn" onclick="generateMockData()">Generate Mock Data</button>
+        <button id="clearBtn" onclick="clearDatabase()">Clear Database</button>
+        <button id="viewBtn" onclick="viewDatabase()">View Database</button>
+
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const DB_NAME = "financorDB";
+        let db;
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateStats(competitors, products, total) {
+            document.getElementById('competitorCount').textContent = competitors;
+            document.getElementById('productCount').textContent = products;
+            document.getElementById('totalCount').textContent = total;
+        }
+
+        async function generateMockData() {
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            log('Starting mock data generation...', 'info');
+
+            try {
+                // Initialize PouchDB
+                db = new PouchDB(DB_NAME);
+
+                // Clear existing data
+                log('Clearing existing database...', 'info');
+                await db.destroy();
+                await new Promise(resolve => setTimeout(resolve, 100));
+                db = new PouchDB(DB_NAME);
+                log('Database cleared', 'success');
+
+                // Generate data
+                const mockData = generateAllEntities();
+
+                // Save to PouchDB
+                let totalRecords = 0;
+                for (const [entityName, records] of Object.entries(mockData)) {
+                    log(`Saving ${records.length} ${entityName} records...`, 'info');
+                    await db.bulkDocs(records);
+                    totalRecords += records.length;
+                    log(`✓ ${entityName}: ${records.length} records saved`, 'success');
+                }
+
+                // Update localStorage for sync timestamp
+                localStorage.setItem('lastSyncTimestamp', new Date().toISOString());
+                log('✓ Sync timestamp updated', 'success');
+
+                updateStats(
+                    mockData.CompetitorShopList.length,
+                    mockData.Products.length,
+                    totalRecords
+                );
+
+                log(`\n🎉 Mock data generation complete! Total: ${totalRecords} records`, 'success');
+                log('You can now close this page and refresh your app.', 'info');
+
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function clearDatabase() {
+            if (!confirm('Are you sure you want to clear all data?')) return;
+
+            log('Clearing database...', 'info');
+            try {
+                db = new PouchDB(DB_NAME);
+                await db.destroy();
+                log('✓ Database cleared', 'success');
+                updateStats(0, 0, 0);
+                localStorage.removeItem('lastSyncTimestamp');
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function viewDatabase() {
+            log('Fetching all records...', 'info');
+            try {
+                db = new PouchDB(DB_NAME);
+                const result = await db.allDocs({ include_docs: true });
+                log(`Total records in database: ${result.rows.length}`, 'info');
+
+                const entities = {};
+                result.rows.forEach(row => {
+                    const entityName = row.doc.entityName;
+                    entities[entityName] = (entities[entityName] || 0) + 1;
+                });
+
+                for (const [entity, count] of Object.entries(entities)) {
+                    log(`  - ${entity}: ${count}`, 'info');
+                }
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        function generateAllEntities() {
+            const timestamp = new Date().toISOString();
+            const assortment = "001";
+
+            // Mock competitors
+            const competitors = [
+                { id: "COMP001", name: "SuperMarket Alpha", city: "Lisboa", address: "Rua das Flores, 123" },
+                { id: "COMP002", name: "MegaStore Beta", city: "Porto", address: "Av. da Liberdade, 456" },
+                { id: "COMP003", name: "HyperMart Gamma", city: "Braga", address: "Praça do Comércio, 789" }
+            ];
+
+            // Hierarchical structure
+            const areas = [
+                { key: "A01", name: "Alimentação" },
+                { key: "A02", name: "Bebidas" },
+                { key: "A03", name: "Higiene e Limpeza" }
+            ];
+
+            const divisions = [
+                { key: "D01", areaKey: "A01", name: "Mercearia" },
+                { key: "D02", areaKey: "A01", name: "Frescos" },
+                { key: "D03", areaKey: "A02", name: "Refrigerantes" },
+                { key: "D04", areaKey: "A02", name: "Alcoólicas" },
+                { key: "D05", areaKey: "A03", name: "Limpeza Casa" }
+            ];
+
+            const families = [
+                { key: "F01", divisionKey: "D01", name: "Massas e Arroz" },
+                { key: "F02", divisionKey: "D01", name: "Conservas" },
+                { key: "F03", divisionKey: "D02", name: "Laticínios" },
+                { key: "F04", divisionKey: "D03", name: "Refrigerantes Cola" },
+                { key: "F05", divisionKey: "D04", name: "Cervejas" },
+                { key: "F06", divisionKey: "D05", name: "Detergentes" }
+            ];
+
+            const categories = [
+                { key: "C01", familyKey: "F01", name: "Massa Seca" },
+                { key: "C02", familyKey: "F01", name: "Arroz Branco" },
+                { key: "C03", familyKey: "F02", name: "Atum" },
+                { key: "C04", familyKey: "F03", name: "Leite" },
+                { key: "C05", familyKey: "F04", name: "Cola Regular" },
+                { key: "C06", familyKey: "F05", name: "Cerveja Lager" },
+                { key: "C07", familyKey: "F06", name: "Detergente Roupa" }
+            ];
+
+            const productGroups = [
+                { key: "PG01", categoryKey: "C01", name: "Esparguete" },
+                { key: "PG02", categoryKey: "C02", name: "Arroz Agulha" },
+                { key: "PG03", categoryKey: "C03", name: "Atum em Azeite" },
+                { key: "PG04", categoryKey: "C04", name: "Leite UHT Meio Gordo" },
+                { key: "PG05", categoryKey: "C05", name: "Coca-Cola" },
+                { key: "PG06", categoryKey: "C06", name: "Sagres" },
+                { key: "PG07", categoryKey: "C07", name: "Skip" }
+            ];
+
+            const products = [
+                { key: "P001", groupKey: "PG01", name: "Esparguete Milaneza 500g", brand: "Milaneza", price: 0.89, ean: "5601234567890", liquidContent: "500", liquidContentUnit: "g" },
+                { key: "P002", groupKey: "PG01", name: "Esparguete Pingo Doce 500g", brand: "Pingo Doce", price: 0.65, ean: "5601234567891", liquidContent: "500", liquidContentUnit: "g" },
+                { key: "P003", groupKey: "PG02", name: "Arroz Cigala 1kg", brand: "Cigala", price: 1.49, ean: "5601234567892", liquidContent: "1", liquidContentUnit: "Kg" },
+                { key: "P004", groupKey: "PG03", name: "Atum Bom Petisco 120g", brand: "Bom Petisco", price: 1.29, ean: "5601234567893", liquidContent: "120", liquidContentUnit: "g" },
+                { key: "P005", groupKey: "PG04", name: "Leite Mimosa 1L", brand: "Mimosa", price: 0.79, ean: "5601234567894", liquidContent: "1", liquidContentUnit: "L" },
+                { key: "P006", groupKey: "PG04", name: "Leite Agros 1L", brand: "Agros", price: 0.75, ean: "5601234567895", liquidContent: "1", liquidContentUnit: "L" },
+                { key: "P007", groupKey: "PG05", name: "Coca-Cola 1.5L", brand: "Coca-Cola", price: 1.59, ean: "5449000000996", liquidContent: "1.5", liquidContentUnit: "L" },
+                { key: "P008", groupKey: "PG05", name: "Coca-Cola Zero 1.5L", brand: "Coca-Cola", price: 1.59, ean: "5449000131805", liquidContent: "1.5", liquidContentUnit: "L" },
+                { key: "P009", groupKey: "PG06", name: "Sagres Mini 20cl", brand: "Sagres", price: 0.49, ean: "5601234567899", liquidContent: "200", liquidContentUnit: "ml" },
+                { key: "P010", groupKey: "PG07", name: "Skip Líquido 40 doses", brand: "Skip", price: 7.99, ean: "5601234567900", liquidContent: "40", liquidContentUnit: "un" }
+            ];
+
+            // Generate entities with relationships
+            const result = {
+                UserCard: [],
+                CompetitorShopList: [],
+                ShoppingList: [],
+                Areas: [],
+                Divisions: [],
+                Families: [],
+                Categories: [],
+                ProductGroups: [],
+                Products: []
+            };
+
+            // UserCard (only one user)
+            result.UserCard.push({
+                _id: `UserCard_${assortment}_USER001`,
+                SyncKey: `UserCard_${assortment}_USER001`,
+                entityName: "UserCard",
+                FullName: "João Silva",
+                Email: "joao.silva@financor.pt",
+                Phone: "+351 912 345 678",
+                Department: "Sales",
+                Position: "Field Analyst",
+                timestamp
+            });
+
+            // CompetitorShopList
+            competitors.forEach(comp => {
+                result.CompetitorShopList.push({
+                    _id: `CompetitorShopList_${assortment}_${comp.id}`,
+                    SyncKey: `CompetitorShopList_${assortment}_${comp.id}`,
+                    entityName: "CompetitorShopList",
+                    Customer: comp.id,
+                    CustomerFullName: comp.name,
+                    Assortment: assortment,
+                    City: comp.city,
+                    Street: comp.address,
+                    PostalCode: "1000-001",
+                    Country: "PT",
+                    timestamp
+                });
+            });
+
+            // Areas
+            competitors.forEach(comp => {
+                areas.forEach(area => {
+                    result.Areas.push({
+                        _id: `Areas_${assortment}_${comp.id}_${area.key}`,
+                        SyncKey: `Areas_${assortment}_${comp.id}_${area.key}`,
+                        entityName: "Areas",
+                        Assortment: assortment,
+                        Customer: comp.id,
+                        Area: area.key,
+                        AreaText: area.name,
+                        timestamp
+                    });
+                });
+            });
+
+            // Divisions
+            competitors.forEach(comp => {
+                divisions.forEach(div => {
+                    result.Divisions.push({
+                        _id: `Divisions_${assortment}_${comp.id}_${div.areaKey}_${div.key}`,
+                        SyncKey: `Divisions_${assortment}_${comp.id}_${div.areaKey}_${div.key}`,
+                        entityName: "Divisions",
+                        Assortment: assortment,
+                        Customer: comp.id,
+                        Area: div.areaKey,
+                        Division: div.key,
+                        DivisionText: div.name,
+                        timestamp
+                    });
+                });
+            });
+
+            // Families
+            competitors.forEach(comp => {
+                families.forEach(fam => {
+                    const division = divisions.find(d => d.key === fam.divisionKey);
+                    result.Families.push({
+                        _id: `Families_${assortment}_${comp.id}_${division.areaKey}_${fam.divisionKey}_${fam.key}`,
+                        SyncKey: `Families_${assortment}_${comp.id}_${division.areaKey}_${fam.divisionKey}_${fam.key}`,
+                        entityName: "Families",
+                        Assortment: assortment,
+                        Customer: comp.id,
+                        Area: division.areaKey,
+                        Division: fam.divisionKey,
+                        Family: fam.key,
+                        FamilyText: fam.name,
+                        timestamp
+                    });
+                });
+            });
+
+            // Categories
+            competitors.forEach(comp => {
+                categories.forEach(cat => {
+                    const family = families.find(f => f.key === cat.familyKey);
+                    const division = divisions.find(d => d.key === family.divisionKey);
+                    result.Categories.push({
+                        _id: `Categories_${assortment}_${comp.id}_${division.areaKey}_${family.divisionKey}_${cat.familyKey}_${cat.key}`,
+                        SyncKey: `Categories_${assortment}_${comp.id}_${division.areaKey}_${family.divisionKey}_${cat.familyKey}_${cat.key}`,
+                        entityName: "Categories",
+                        Assortment: assortment,
+                        Customer: comp.id,
+                        Area: division.areaKey,
+                        Division: family.divisionKey,
+                        Family: cat.familyKey,
+                        Category: cat.key,
+                        CategoryText: cat.name,
+                        timestamp
+                    });
+                });
+            });
+
+            // ProductGroups
+            competitors.forEach(comp => {
+                productGroups.forEach(pg => {
+                    const category = categories.find(c => c.key === pg.categoryKey);
+                    const family = families.find(f => f.key === category.familyKey);
+                    const division = divisions.find(d => d.key === family.divisionKey);
+                    result.ProductGroups.push({
+                        _id: `ProductGroups_${assortment}_${comp.id}_${division.areaKey}_${family.divisionKey}_${category.familyKey}_${pg.categoryKey}_${pg.key}`,
+                        SyncKey: `ProductGroups_${assortment}_${comp.id}_${division.areaKey}_${family.divisionKey}_${category.familyKey}_${pg.categoryKey}_${pg.key}`,
+                        entityName: "ProductGroups",
+                        Assortment: assortment,
+                        Customer: comp.id,
+                        Area: division.areaKey,
+                        Division: family.divisionKey,
+                        Family: category.familyKey,
+                        Category: pg.categoryKey,
+                        ProductGroup: pg.key,
+                        ProductGroupText: pg.name,
+                        timestamp
+                    });
+                });
+            });
+
+            // Products
+            competitors.forEach(comp => {
+                products.forEach(prod => {
+                    const productGroup = productGroups.find(pg => pg.key === prod.groupKey);
+                    const category = categories.find(c => c.key === productGroup.categoryKey);
+                    const family = families.find(f => f.key === category.familyKey);
+                    const division = divisions.find(d => d.key === family.divisionKey);
+                    const area = areas.find(a => a.key === division.areaKey);
+
+                    // Add some price variation per competitor
+                    const priceVariation = (Math.random() - 0.5) * 0.2;
+                    const competitorPrice = (prod.price * (1 + priceVariation)).toFixed(2);
+
+                    result.Products.push({
+                        _id: `Products_${assortment}_${comp.id}_${division.areaKey}_${family.divisionKey}_${category.familyKey}_${productGroup.categoryKey}_${prod.groupKey}_${prod.key}`,
+                        SyncKey: `Products_${assortment}_${comp.id}_${division.areaKey}_${family.divisionKey}_${category.familyKey}_${productGroup.categoryKey}_${prod.groupKey}_${prod.key}`,
+                        entityName: "Products",
+                        Assortment: assortment,
+                        Customer: comp.id,
+                        CustomerName: comp.name,
+                        Area: division.areaKey,
+                        AreaText: area.name,
+                        Division: family.divisionKey,
+                        DivisionText: division.name,
+                        Family: category.familyKey,
+                        FamilyText: family.name,
+                        Category: productGroup.categoryKey,
+                        CategoryText: category.name,
+                        ProductGroup: prod.groupKey,
+                        ProductGroupText: productGroup.name,
+                        Product: prod.key,
+                        MaterialDescription: prod.name,
+                        MaterialDescriptionByCustomer: prod.name,
+                        EAN: prod.ean,
+                        Brand: prod.brand,
+                        Price: competitorPrice,
+                        NormalPrice: null,
+                        PromoPrice: null,
+                        PromoType: "",
+                        PromoStartDate: null,
+                        PromoEndDate: null,
+                        Observations: "",
+                        LiquidContent: prod.liquidContent,
+                        LiquidContentUnit: prod.liquidContentUnit,
+                        Currency: "EUR",
+                        Unit: "UN",
+                        InStock: Math.random() > 0.1, // 90% in stock
+                        IsCollected: false,
+                        CollectedDate: null,
+                        timestamp
+                    });
+                });
+            });
+
+            // ShoppingList (empty by default, will be populated when user collects data)
+            result.ShoppingList = [];
+
+            return result;
+        }
+
+        // Log initial message
+        window.onload = function() {
+            log('Mock Data Generator ready. Click "Generate Mock Data" to populate the database.', 'info');
+        };
+    </script>
+</body>
+</html>

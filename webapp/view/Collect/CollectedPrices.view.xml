@@ -1,0 +1,132 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Collect.CollectedPrices"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+>
+    <Page
+        id="collectedPricesPage"
+        title="{i18n>CollectedPricesTitle}"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press=".onNavBack"
+                        tooltip="{i18n>BackTooltip}"
+                    />
+                    <Button
+                        icon="sap-icon://home"
+                        press=".onNavToHome"
+                        tooltip="{i18n>HomeTooltip}"
+                    />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>CollectedPricesTitle}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        id="btnRefresh"
+                        icon="sap-icon://refresh"
+                        press=".onRefresh"
+                        tooltip="{i18n>RefreshTooltip}"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <subHeader>
+            <Toolbar>
+                <SearchField
+                    id="searchField"
+                    width="100%"
+                    placeholder="{i18n>SearchPlaceholder}"
+                    liveChange=".onSearch"
+                />
+            </Toolbar>
+        </subHeader>
+
+        <content>
+            <List
+                id="collectedPricesList"
+                items="{collectedModel>/items}"
+                noDataText="{i18n>NoCollectedPrices}"
+                mode="SingleSelectMaster"
+                itemPress=".onItemPress"
+            >
+                <items>
+                    <ObjectListItem
+                        title="{collectedModel>MaterialDescription}"
+                        number="{
+                            path: 'collectedModel>NormalPrice',
+                            formatter: '.formatPrice'
+                        }"
+                        numberUnit="EUR"
+                        type="Active"
+                    >
+                        <firstStatus>
+                            <ObjectStatus
+                                text="{collectedModel>CustomerName}"
+                                state="Information"
+                            />
+                        </firstStatus>
+                        <secondStatus>
+                            <ObjectStatus
+                                text="{
+                                    path: 'collectedModel>CollectedDate',
+                                    formatter: '.formatCollectedDate'
+                                }"
+                                state="Success"
+                            />
+                        </secondStatus>
+                        <attributes>
+                            <ObjectAttribute
+                                title="{i18n>AreaLabel}"
+                                text="{collectedModel>AreaText}"
+                            />
+                            <ObjectAttribute
+                                title="{i18n>DivisionLabel}"
+                                text="{collectedModel>DivisionText}"
+                            />
+                            <ObjectAttribute
+                                title="{i18n>FamilyLabel}"
+                                text="{collectedModel>FamilyText}"
+                            />
+                            <ObjectAttribute
+                                title="{i18n>CategoryLabel}"
+                                text="{collectedModel>CategoryText}"
+                            />
+                            <ObjectAttribute
+                                title="{i18n>BrandLabel}"
+                                text="{collectedModel>Brand}"
+                            />
+                            <ObjectAttribute
+                                title="{i18n>PromoPriceLabel}"
+                                text="{
+                                    path: 'collectedModel>PromoPrice',
+                                    formatter: '.formatPromoPrice'
+                                }"
+                                visible="{= !!${collectedModel>PromoPrice} }"
+                            />
+                        </attributes>
+                    </ObjectListItem>
+                </items>
+            </List>
+        </content>
+
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Label text="{i18n>TotalCollected}:" />
+                <ObjectNumber
+                    number="{collectedModel>/count}"
+                    unit="{i18n>ItemsLabel}"
+                    emphasized="true"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

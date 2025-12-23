@@ -1,0 +1,104 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Main"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <Page
+        id="mainPage"
+        title="{i18n>WelcomeTitle}"
+        showNavButton="false"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="{i18n>WelcomeTitle}" />
+                </contentLeft>
+                <contentRight>
+                    <Avatar
+                        id="userAvatar"
+                        src="{path: 'home>/user/iconSrc', formatter: '.formatSrc'}"
+                        displaySize="XS"
+                        press=".onPressUserCard"
+                        tooltip="{home>/user/FullName}"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            
+            <FlexBox
+                direction="Column"
+                alignItems="Stretch"
+                justifyContent="Center"
+                class="sapUiContentPadding sapUiMediumMarginTop"
+            >
+                <!-- Tile 1: Iniciar Shopping -->
+                <GenericTile
+                    id="tileShopping"
+                    class="sapUiSmallMarginBottom"
+                    header="{i18n>OptionInit}"
+                    subheader="{i18n>OptionInitSub}"
+                    press=".onPressShopping"
+                    frameType="TwoByHalf"
+                >
+                    <TileContent>
+                        <ImageContent src="sap-icon://cart-3" />
+                    </TileContent>
+                </GenericTile>
+
+                <!-- Tile 2: Preços Recolhidos -->
+                <GenericTile
+                    id="tileCollectedPrices"
+                    class="sapUiSmallMarginBottom"
+                    header="{i18n>OptionCollectedPrices}"
+                    subheader="{i18n>OptionCollectedPricesSub}"
+                    press=".onPressCollectedPrices"
+                    frameType="TwoByHalf"
+                >
+                    <TileContent>
+
+                        <NumericContent
+                            value="{mainModel>/pendingSyncCount}"
+                            icon="sap-icon://list"
+                            withMargin="false"
+                        />
+                    </TileContent>
+
+                </GenericTile>
+
+                <!-- Tile 3: Sincronizar Dados -->
+                <GenericTile
+                    id="tileSync"
+                    class="sapUiSmallMarginBottom"
+                    header="{i18n>OptionSync}"
+                    subheader="{i18n>OptionSyncSub}"
+                    press=".onPressSync"
+                    frameType="TwoByHalf"
+                >
+
+                    <TileContent footer="{i18n>OptionSyncFooter}">
+                       <ImageContent src="sap-icon://synchronize" />
+
+                    </TileContent>
+                </GenericTile>
+            </FlexBox>
+            
+        </content>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Label text="{i18n>LastSync}" />
+                <Text
+                    text="{
+                        path: 'syncModel>/LastSync',
+                        formatter: '.formatDateTime'
+                    }"
+                    class="sapUiTinyMarginEnd"
+                />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

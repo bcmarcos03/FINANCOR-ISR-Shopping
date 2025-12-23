@@ -1,0 +1,151 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Collect.ProductSearch"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page
+        id="productSearchPage"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press=".onNavBack"
+                        tooltip="{i18n>BackTooltip}" />
+                    <Button
+                        icon="sap-icon://home"
+                        press=".onNavToHome"
+                        tooltip="{i18n>HomeTooltip}"
+                        type="Transparent" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>ProductSearchTitle} - {viewModel>/competitorName}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        id="btnToggleManualMode"
+                        icon="sap-icon://grid"
+                        tooltip="{i18n>ManualNavigationTooltip}"
+                        press=".onToggleManualMode"
+                        type="Transparent" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <subHeader>
+            <Toolbar>
+                <SearchField
+                    id="productSearchField"
+                    placeholder="{i18n>SearchProductPlaceholder}"
+                    width="100%"
+                    search=".onSearch"
+                    value="{viewModel>/searchQuery}" />
+                <Button
+                    icon="sap-icon://search"
+                    press=".onSearch"
+                    type="Emphasized" />
+            </Toolbar>
+        </subHeader>
+
+        <content>
+            <!-- Empty State: No Search Yet -->
+            <VBox
+                id="emptySearchState"
+                visible="{= !${viewModel>/hasSearched} }"
+                alignItems="Center"
+                justifyContent="Center"
+                class="sapUiContentPadding sapUiLargeMarginTop">
+                <core:Icon
+                    src="sap-icon://search"
+                    size="4rem"
+                    color="#0854a0"
+                    class="sapUiMediumMarginBottom" />
+                <Title
+                    text="{i18n>SearchEmptyStateTitle}"
+                    level="H2"
+                    class="sapUiSmallMarginBottom" />
+                <Text
+                    text="{i18n>SearchEmptyStateText}"
+                    class="sapUiTinyMarginBottom" />
+                <Button
+                    text="{i18n>UseManualNavigation}"
+                    icon="sap-icon://grid"
+                    press=".onToggleManualMode"
+                    class="sapUiMediumMarginTop" />
+            </VBox>
+
+            <!-- Empty State: No Results -->
+            <VBox
+                id="noResultsState"
+                visible="{= ${viewModel>/hasSearched} &amp;&amp; ${viewModel>/resultCount} === 0 }"
+                alignItems="Center"
+                justifyContent="Center"
+                class="sapUiContentPadding sapUiLargeMarginTop">
+                <core:Icon
+                    src="sap-icon://message-information"
+                    size="3rem"
+                    color="#e78c07"
+                    class="sapUiMediumMarginBottom" />
+                <Title
+                    text="{i18n>NoResultsTitle}"
+                    level="H3"
+                    class="sapUiSmallMarginBottom" />
+                <Text text="{i18n>NoResultsText}" />
+            </VBox>
+
+            <!-- Results List -->
+            <List
+                id="productSearchResults"
+                visible="{= ${viewModel>/resultCount} > 0 }"
+                items="{listModel>/ListData}"
+                mode="SingleSelect"
+                noDataText="{i18n>NoProductsFound}">
+
+                <ObjectListItem                
+                    type="Active"
+                    press=".onProductSelect"
+                    title="{listModel>MaterialDescription}"
+                    number="{listModel>Product}"
+                    numberUnit="">
+
+                    <attributes>
+                        <ObjectAttribute text="EAN: {listModel>EAN}" />
+                        <ObjectAttribute text="Marca: {listModel>Brand}" />
+                        <ObjectAttribute text="{listModel>AreaText} > {listModel>DivisionText} > {listModel>FamilyText}" />
+                        <ObjectAttribute text="{listModel>CategoryText} > {listModel>ProductGroupText}" />
+                    </attributes>
+
+                    <firstStatus>
+                        <ObjectStatus
+                            text="{= ${listModel>IsCollected} ? 'Recolhido' : '' }"
+                            state="{= ${listModel>IsCollected} ? 'Success' : 'None' }" />
+                    </firstStatus>
+
+                    <markers>
+                        <ObjectMarker type="Flagged" visibility="{= ${listModel>IsCollected} ? 'TextOnly' : 'IconOnly' }" />
+                    </markers>
+                </ObjectListItem>
+
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{i18n>SearchResults}" level="H2" />
+                        <ToolbarSpacer />
+                        <Label text="{viewModel>/resultCount} {i18n>ItemsLabel}" />
+                    </Toolbar>
+                </headerToolbar>
+            </List>
+        </content>
+
+        <footer>
+            <Toolbar visible="{= ${viewModel>/resultCount} > 0 }">
+                <ToolbarSpacer />
+                <Label text="{i18n>ResultsCount}: {viewModel>/resultCount}" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

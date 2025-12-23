@@ -1,0 +1,245 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "com.financor.sd.shoppingapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.10.4",
+      "toolsId": "90de651c-cae4-4859-82d6-e27cb33ff5fc"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZSD_SHOPPINGCOMPETITORS/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.143.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.financor.sd.shoppingapp.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "com.financor.sd.shoppingapp.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "main",
+          "target": "main"
+        },
+        {
+          "pattern": "competitors",
+          "name": "competitors",
+          "target": "targetCompetitors"
+        },
+        {
+          "target": "targetShopping",
+          "name": "shopping",
+          "pattern": "shopping/{competitorID}"
+        },
+        {
+          "pattern": "collect/productsearch/{competitorName}/{competitorKey}/{assortmentKey}",
+          "name": "ProductSearch",
+          "target": "ProductSearch"
+        },
+        {
+          "pattern": "collect/areas/{competitorName}/{competitorKey}/{assortmentKey}",
+          "name": "AreaList",
+          "target": [
+            "AreaList"
+          ]
+        },
+        {
+          "pattern": "collect/divisions/{competitorName}/{competitorKey}/{assortmentKey}/{AreaKey}",
+          "name": "DivisionList",
+          "target": [
+            "DivisionList"
+          ]
+        },
+        {
+          "pattern": "collect/families/{competitorName}/{competitorKey}/{assortmentKey}/{areaKey}/{DivisionKey}",
+          "name": "FamilyList",
+          "target": [
+            "FamilyList"
+          ]
+        },
+        {
+          "pattern": "collect/categories/{competitorName}/{competitorKey}/{assortmentKey}/{areaKey}/{divisionKey}/{FamilyKey}",
+          "name": "CategoryList",
+          "target": [
+            "CategoryList"
+          ]
+        },
+        {
+          "pattern": "collect/productgroups/{competitorName}/{competitorKey}/{assortmentKey}/{areaKey}/{divisionKey}/{familyKey}/{CategoryKey}",
+          "name": "ProductGroupList",
+          "target": [
+            "ProductGroupList"
+          ]
+        },
+        {
+          "pattern": "collect/produts/{competitorName}/{competitorKey}/{assortmentKey}/{areaKey}/{divisionKey}/{familyKey}/{categoryKey}/{ProductGroupKey}",
+          "name": "ProductList",
+          "target": [
+            "ProductList"
+          ]
+        },
+        {
+          "pattern": "collect/priceentry/{productSyncKey}",
+          "name": "ProductPriceEntryForm",
+          "target": "ProductPriceEntryForm"
+        },
+        {
+          "pattern": "collectedprices",
+          "name": "CollectedPrices",
+          "target": "CollectedPrices"
+        }
+      ],
+      "targets": {
+        "main": {
+          "viewId": "main",
+          "viewName": "Main"
+        },
+        "targetCompetitors": {
+          "viewId": "Competitors",
+          "viewName": "Competitors.Competitor",
+          "viewType": "XML",
+          "transition": "slide"
+        },
+        "ProductSearch": {
+          "viewName": "Collect.ProductSearch",
+          "viewId": "ProductSearch",
+          "viewLevel": 2,
+          "transition": "slide"
+        },
+        "AreaList": {
+          "viewName": "Collect.AreaList",
+          "viewId": "AreaList",
+          "viewLevel": 2
+        },
+        "DivisionList": {
+          "viewName": "Collect.DivisionList",
+          "viewId": "DivisionList",
+          "viewLevel": 3
+        },
+        "FamilyList": {
+          "viewName": "Collect.FamilyList",
+          "viewId": "Collect.FamilyList",
+          "viewLevel": 4
+        },
+        "CategoryList": {
+          "viewName": "Collect.CategoryList",
+          "viewId": "Collect.CategoryList",
+          "viewLevel": 5
+        },
+        "ProductGroupList": {
+          "viewName": "Collect.ProductGroupList",
+          "viewId": "Collect.ProductGroupList",
+          "viewLevel": 6
+        },
+        "ProductList": {
+          "viewName": "Collect.ProductList",
+          "viewId": "Collect.ProductList",
+          "viewLevel": 7,
+          "transition": "flip"
+        },
+        "ProductPriceEntryForm": {
+          "viewName": "Collect.ProductPriceEntryForm",
+          "viewId": "ProductPriceEntryForm",
+          "viewLevel": 8,
+          "transition": "slide"
+        },
+        "CollectedPrices": {
+          "viewName": "Collect.CollectedPrices",
+          "viewId": "CollectedPrices",
+          "viewLevel": 2,
+          "transition": "slide"
+        },
+        "targetShopping": {
+          "viewType": "XML",
+          "transition": "flip",
+          "clearControlAggregation": false,
+          "viewId": "Shopping",
+          "viewName": "Shopping"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.financor.sd.shoppingapp.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

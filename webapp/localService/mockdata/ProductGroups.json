@@ -1,0 +1,233 @@
+[
+  {
+    "SyncKey": "ProductGroups_001_COMP001_A01_D01_F01_C01_PG01",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C01",
+    "ProductGroup": "PG01",
+    "ProductGroupText": "Esparguete"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP001_A01_D01_F01_C02_PG02",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C02",
+    "ProductGroup": "PG02",
+    "ProductGroupText": "Arroz Agulha"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP001_A01_D01_F02_C03_PG03",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F02",
+    "Category": "C03",
+    "ProductGroup": "PG03",
+    "ProductGroupText": "Atum em Azeite"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP001_A01_D02_F03_C04_PG04",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D02",
+    "Family": "F03",
+    "Category": "C04",
+    "ProductGroup": "PG04",
+    "ProductGroupText": "Leite UHT Meio Gordo"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP001_A02_D03_F04_C05_PG05",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A02",
+    "Division": "D03",
+    "Family": "F04",
+    "Category": "C05",
+    "ProductGroup": "PG05",
+    "ProductGroupText": "Coca-Cola"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP001_A02_D04_F05_C06_PG06",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A02",
+    "Division": "D04",
+    "Family": "F05",
+    "Category": "C06",
+    "ProductGroup": "PG06",
+    "ProductGroupText": "Sagres"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP001_A03_D05_F06_C07_PG07",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A03",
+    "Division": "D05",
+    "Family": "F06",
+    "Category": "C07",
+    "ProductGroup": "PG07",
+    "ProductGroupText": "Skip"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP002_A01_D01_F01_C01_PG01",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C01",
+    "ProductGroup": "PG01",
+    "ProductGroupText": "Esparguete"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP002_A01_D01_F01_C02_PG02",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C02",
+    "ProductGroup": "PG02",
+    "ProductGroupText": "Arroz Agulha"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP002_A01_D01_F02_C03_PG03",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F02",
+    "Category": "C03",
+    "ProductGroup": "PG03",
+    "ProductGroupText": "Atum em Azeite"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP002_A01_D02_F03_C04_PG04",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D02",
+    "Family": "F03",
+    "Category": "C04",
+    "ProductGroup": "PG04",
+    "ProductGroupText": "Leite UHT Meio Gordo"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP002_A02_D03_F04_C05_PG05",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A02",
+    "Division": "D03",
+    "Family": "F04",
+    "Category": "C05",
+    "ProductGroup": "PG05",
+    "ProductGroupText": "Coca-Cola"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP002_A02_D04_F05_C06_PG06",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A02",
+    "Division": "D04",
+    "Family": "F05",
+    "Category": "C06",
+    "ProductGroup": "PG06",
+    "ProductGroupText": "Sagres"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP002_A03_D05_F06_C07_PG07",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A03",
+    "Division": "D05",
+    "Family": "F06",
+    "Category": "C07",
+    "ProductGroup": "PG07",
+    "ProductGroupText": "Skip"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP003_A01_D01_F01_C01_PG01",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C01",
+    "ProductGroup": "PG01",
+    "ProductGroupText": "Esparguete"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP003_A01_D01_F01_C02_PG02",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F01",
+    "Category": "C02",
+    "ProductGroup": "PG02",
+    "ProductGroupText": "Arroz Agulha"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP003_A01_D01_F02_C03_PG03",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D01",
+    "Family": "F02",
+    "Category": "C03",
+    "ProductGroup": "PG03",
+    "ProductGroupText": "Atum em Azeite"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP003_A01_D02_F03_C04_PG04",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D02",
+    "Family": "F03",
+    "Category": "C04",
+    "ProductGroup": "PG04",
+    "ProductGroupText": "Leite UHT Meio Gordo"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP003_A02_D03_F04_C05_PG05",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A02",
+    "Division": "D03",
+    "Family": "F04",
+    "Category": "C05",
+    "ProductGroup": "PG05",
+    "ProductGroupText": "Coca-Cola"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP003_A02_D04_F05_C06_PG06",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A02",
+    "Division": "D04",
+    "Family": "F05",
+    "Category": "C06",
+    "ProductGroup": "PG06",
+    "ProductGroupText": "Sagres"
+  },
+  {
+    "SyncKey": "ProductGroups_001_COMP003_A03_D05_F06_C07_PG07",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A03",
+    "Division": "D05",
+    "Family": "F06",
+    "Category": "C07",
+    "ProductGroup": "PG07",
+    "ProductGroupText": "Skip"
+  }
+]

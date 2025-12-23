@@ -1,0 +1,88 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Competitors.Competitor"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:layout="sap.ui.layout"
+    displayBlock="true"
+>
+    <Page
+        id="competitorPage"
+        title="Concorrentes Sincronizados (Offline)"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+    >
+        <content>
+            <f:GridList
+                id="competitorGridList"
+                items="{
+                    path: 'listModel>/CompetitorLists', 
+                    sorter: {
+                        path: 'Assortment',
+                        descending: false,
+                        group: true
+                    }
+                }"                
+                growing="true"
+                growingThreshold="10"
+                noDataText="Nenhum concorrente encontrado. Verifique a sincronização."
+            >
+                <f:customLayout>
+                    <grid:GridBoxLayout
+                        boxMinWidth="20rem"
+                    />
+                </f:customLayout>
+
+                <f:GridListItem
+                    press="onCompetitorPress"
+                    type="Active"
+                >
+                    <layout:VerticalLayout
+                        width="100%"
+                        class="sapUiSmallMargin"
+                    >
+                        <Title                            
+                            text="{listModel>Customer}|{listModel>CustomerFullName}"
+                            wrapping="true"                            
+                            level="H2"
+                            class="sapUiTinyMarginBottom"
+                        />
+                        <Text
+                            text="{listModel>AssortmentName}"
+                            class="sapThemeText sapUiTinyMarginBottom"
+                        />
+                        <HBox alignItems="Center">
+                            <core:Icon
+                                src="sap-icon://locate-me"
+                                size="0.8rem"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Text
+                                text="{listModel>StreetName}/{listModel>CityName}"
+                            />
+                        </HBox>
+                        <ObjectStatus
+                            title="{listModel>AssortmentName}"
+                            text="{listModel>Assortment}"
+                            state="None"
+                            class="sapUiTinyMarginTop"
+                        />
+                    </layout:VerticalLayout>
+                </f:GridListItem>
+            </f:GridList>
+        </content>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="Atualizar Lista Manualmente"
+                    icon="sap-icon://refresh"
+                    press="._loadCompetitorsFromPouchDB"
+                />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

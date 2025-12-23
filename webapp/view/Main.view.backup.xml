@@ -1,0 +1,114 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Main"
+    displayBlock="true"
+    xmlns:cards="sap.f.cards"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+>
+    <Page>
+        <tnt:ToolPage>
+            <tnt:header>
+                <tnt:ToolHeader>
+                    <Image
+                        src="{path: 'home>/homeIconSrc', formatter: '.formatSrc'}"
+                        class="sapUiTinyMarginBegin"
+                    />
+                    <Text
+                        text="{i18n>WelcomeTitle}"
+                        wrapping="false"
+                    />
+                    <ToolbarSpacer />
+                    <Button
+                        icon="sap-icon://bell"
+                        type="Transparent"
+                    />
+                    <Avatar
+                        id="userAvatar"
+                        src="{path: 'home>/user/iconSrc', formatter: '.formatSrc'}"
+                        displaySize="XS"
+                        class="avatarSize"
+                        press="onPressUserCard"
+                        tooltip="{home>/user/FullName}"
+                    />
+                </tnt:ToolHeader>
+            </tnt:header>
+            <tnt:mainContents>
+                <VBox renderType="Bare">
+                    <Title
+                        text="{i18n>TitleOptions}"
+                        titleStyle="H4"
+                        class="sapUiSmallMarginBottom sapUiLargeMarginTop"
+                    />
+                    <f:Card height="100%">
+                        <f:header>
+                            <cards:Header title="{i18>ShoppingList}" />
+                        </f:header>
+                        <f:content>
+                            <VBox
+                                alignItems="Center"
+                                justifyContent="Center"
+                                width="100%"
+                            >
+                                <GenericTile
+                                    class="sapUiTinyMarginBegin sapUiTinyMarginCenter tileLayout"
+                                    header="{i18n>OptionInit}"
+                                    subheader="{i18n>OptionInitSub}"
+                                    press="onPressShopping"
+                                >
+                                    <TileContent footer="">
+                                        <ImageContent src="sap-icon://cart-3" />
+                                    </TileContent>
+                                </GenericTile>
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+                    <f:Card height="100%">
+                        <f:header>
+                            <cards:Header title="{i18n>Syncronize}" />
+                        </f:header>
+                        <f:content>
+                            <VBox
+                                alignItems="Center"
+                                justifyContent="Center"
+                                width="100%"
+                            >
+                                <GenericTile
+                                    class="sapUiTinyMarginBegin sapUiTinyMarginFooter tileLayout"
+                                    header="{i18n>OptionSync}"
+                                    subheader="{i18n>OptionSyncSub}"
+                                    press="onPressSync"
+                                >
+                                    <TileContent
+                                        footer="{i18n>OptionSyncFooter}"
+                                    >
+                                        <ImageContent
+                                            src="sap-icon://synchronize"
+                                        />
+                                    </TileContent>
+                                </GenericTile>
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+                </VBox>
+            </tnt:mainContents>
+        </tnt:ToolPage>
+        <footer>
+            <Toolbar>
+                <Button type="Attention" icon="sap-icon://activity-2" text="{i18n>OptionCollectedPrices}" press="onPressCollectedPrices"></Button>
+                <ToolbarSpacer />
+                <Label text="{i18n>LastSync}" />
+                <Text
+                    text="{
+                        path: 'syncModel>/LastSync',
+                        formatter: '.formatDateTime'}"
+                    class="sapUiTinyMarginEnd"
+                />
+
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

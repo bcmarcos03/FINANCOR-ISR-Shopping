@@ -1,0 +1,122 @@
+[
+  {
+    "SyncKey": "Divisions_001_COMP001_A01_D01",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D01",
+    "DivisionText": "Mercearia"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP001_A01_D02",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A01",
+    "Division": "D02",
+    "DivisionText": "Frescos"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP001_A02_D03",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A02",
+    "Division": "D03",
+    "DivisionText": "Refrigerantes"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP001_A02_D04",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A02",
+    "Division": "D04",
+    "DivisionText": "Alcoólicas"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP001_A03_D05",
+    "Assortment": "001",
+    "Customer": "COMP001",
+    "Area": "A03",
+    "Division": "D05",
+    "DivisionText": "Limpeza Casa"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP002_A01_D01",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D01",
+    "DivisionText": "Mercearia"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP002_A01_D02",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A01",
+    "Division": "D02",
+    "DivisionText": "Frescos"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP002_A02_D03",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A02",
+    "Division": "D03",
+    "DivisionText": "Refrigerantes"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP002_A02_D04",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A02",
+    "Division": "D04",
+    "DivisionText": "Alcoólicas"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP002_A03_D05",
+    "Assortment": "001",
+    "Customer": "COMP002",
+    "Area": "A03",
+    "Division": "D05",
+    "DivisionText": "Limpeza Casa"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP003_A01_D01",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D01",
+    "DivisionText": "Mercearia"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP003_A01_D02",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A01",
+    "Division": "D02",
+    "DivisionText": "Frescos"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP003_A02_D03",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A02",
+    "Division": "D03",
+    "DivisionText": "Refrigerantes"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP003_A02_D04",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A02",
+    "Division": "D04",
+    "DivisionText": "Alcoólicas"
+  },
+  {
+    "SyncKey": "Divisions_001_COMP003_A03_D05",
+    "Assortment": "001",
+    "Customer": "COMP003",
+    "Area": "A03",
+    "Division": "D05",
+    "DivisionText": "Limpeza Casa"
+  }
+]

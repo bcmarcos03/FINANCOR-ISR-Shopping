@@ -1,0 +1,32 @@
+[
+  {
+    "SyncKey": "CompetitorShopList_001_COMP001",
+    "Customer": "COMP001",
+    "CustomerFullName": "SuperMarket Alpha",
+    "Assortment": "001",
+    "City": "Lisboa",
+    "Street": "Rua das Flores, 123",
+    "PostalCode": "1000-001",
+    "Country": "PT"
+  },
+  {
+    "SyncKey": "CompetitorShopList_001_COMP002",
+    "Customer": "COMP002",
+    "CustomerFullName": "MegaStore Beta",
+    "Assortment": "001",
+    "City": "Porto",
+    "Street": "Av. da Liberdade, 456",
+    "PostalCode": "4000-001",
+    "Country": "PT"
+  },
+  {
+    "SyncKey": "CompetitorShopList_001_COMP003",
+    "Customer": "COMP003",
+    "CustomerFullName": "HyperMart Gamma",
+    "Assortment": "001",
+    "City": "Braga",
+    "Street": "Praça do Comércio, 789",
+    "PostalCode": "4700-001",
+    "Country": "PT"
+  }
+]

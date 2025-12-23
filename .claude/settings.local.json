@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(powershell -Command \"\\(Get-ChildItem -Path webapp -Include *.js,*.xml -Recurse\\) | ForEach-Object { \\(Get-Content $_FullName -Raw\\) -replace ''sap\\\\.pt\\\\.financor\\\\.app\\\\.shopping'', ''com.financor.sd.shoppingapp'' | Set-Content $_FullName -NoNewline }\")",
+      "Bash(node fix-namespace.js)",
+      "Bash(node fix-imports.js:*)"
+    ]
+  }
+}

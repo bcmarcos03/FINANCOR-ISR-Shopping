@@ -1,0 +1,74 @@
+<mvc:View
+    controllerName="com.financor.sd.shoppingapp.controller.Collect.ProductList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    displayBlock="true"
+>
+    <Page
+        id="productListMainPage"
+        title="5. Coleta de Preços - {viewModel>/competitorName}"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+    >
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press=".onNavBack"
+                        tooltip="{i18n>BackTooltip}"
+                    />
+                    <Button
+                        icon="sap-icon://home"
+                        press=".onNavToHome"
+                        tooltip="{i18n>HomeTooltip}"
+                        type="Transparent"
+                    />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>ProductTitle}" />
+                </contentMiddle>
+                <contentRight />
+            </Bar>
+        </customHeader>
+        <content>
+            <Table
+                id="idProductsTable"
+                inset="true"
+                popinLayout="GridLarge"
+                items="{
+				    path: 'listModel>/ListData',
+                    sorter: {
+                      path: 'MaterialName' }
+			    }"
+            >
+                <columns>
+                    <Column>
+                        <Text text="Products" />
+                    </Column>
+                    <Column>
+                        <Text text="Customer Name" />
+                    </Column>
+                </columns>
+                <ColumnListItem 
+                    vAlign="Middle" 
+                    type="Active"
+                    press=".onCollectPricePress">
+                    <cells>
+                        <ObjectIdentifier
+                            title="{listModel>MaterialDescription}"
+                            text="{listModel>Product}"
+                        />
+                        
+                        <ObjectAttribute
+                            text="{listModel>MaterialNameCustomer}"
+                        />                                                    
+                    </cells>
+                </ColumnListItem>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

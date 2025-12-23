@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.0"
+metadata:
+  name: com.financor.sd.shoppingapp
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: http://192.168.40.171:8000/
+          client: "100"
+        app:
+          name: ZSD_SHOPPING
+          description: Shopping APP
+          package: ZSHP
+          transport: S4DK907735
+        exclude:
+          - /test/

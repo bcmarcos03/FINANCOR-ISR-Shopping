@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="cds_zsi_shoppingcompetitors" xml:lang="pt" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ProductsType" sap:label="Artigos da Lista de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="Area"/>
+                    <PropertyRef Name="AreaText"/>
+                    <PropertyRef Name="Division"/>
+                    <PropertyRef Name="DivisionText"/>
+                    <PropertyRef Name="Family"/>
+                    <PropertyRef Name="FamilyText"/>
+                    <PropertyRef Name="Category"/>
+                    <PropertyRef Name="CategoryText"/>
+                    <PropertyRef Name="ProductGroup"/>
+                    <PropertyRef Name="ProductGroupText"/>
+                    <PropertyRef Name="Product"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Nº cliente"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="Area" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="AreaText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Division" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="DivisionText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Family" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="FamilyText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Category" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="CategoryText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="ProductGroup" Type="Edm.String" Nullable="false" MaxLength="9" sap:display-format="UpperCase" sap:label="Grupo de produtos"/>
+                <Property Name="ProductGroupText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Product" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Produto" sap:quickinfo="Número do produto"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="137"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="40"/>
+                <Property Name="MaterialName" Type="Edm.String" MaxLength="40" sap:label="Texto breve material" sap:quickinfo="Texto breve de material"/>
+                <Property Name="MaterialDescriptionByCustomer" Type="Edm.String" MaxLength="40" sap:label="Denominação cliente" sap:quickinfo="Denominação do material pelo cliente"/>
+                <Property Name="numberOfProducts" Type="Edm.Byte"/>
+                <NavigationProperty Name="to_alt" Relationship="cds_zsi_shoppingcompetitors.assoc_91FEAF712FCDE85422CB9F73C0823B02" FromRole="FromRole_assoc_91FEAF712FCDE85422CB9F73C0823B02" ToRole="ToRole_assoc_91FEAF712FCDE85422CB9F73C0823B02"/>
+                <NavigationProperty Name="to_EAN" Relationship="cds_zsi_shoppingcompetitors.assoc_CA2761E6BD6A68C475FE53BE1AB8EC62" FromRole="FromRole_assoc_CA2761E6BD6A68C475FE53BE1AB8EC62" ToRole="ToRole_assoc_CA2761E6BD6A68C475FE53BE1AB8EC62"/>
+            </EntityType>
+            <EntityType Name="ProductGroupsType" sap:label="Grp.Merc. de Artigos Lista de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="Area"/>
+                    <PropertyRef Name="AreaText"/>
+                    <PropertyRef Name="Division"/>
+                    <PropertyRef Name="DivisionText"/>
+                    <PropertyRef Name="Family"/>
+                    <PropertyRef Name="FamilyText"/>
+                    <PropertyRef Name="Category"/>
+                    <PropertyRef Name="CategoryText"/>
+                    <PropertyRef Name="ProductGroup"/>
+                    <PropertyRef Name="ProductGroupText"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Nº cliente"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="Area" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="AreaText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Division" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="DivisionText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Family" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="FamilyText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Category" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="CategoryText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="ProductGroup" Type="Edm.String" Nullable="false" MaxLength="9" sap:display-format="UpperCase" sap:label="Grupo de produtos"/>
+                <Property Name="ProductGroupText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="97"/>
+                <Property Name="numberOfProducts" Type="Edm.Byte"/>
+                <NavigationProperty Name="to_ShoppingListProducts" Relationship="cds_zsi_shoppingcompetitors.assoc_71FFED6377CEE153B33B40AE9BBC893F" FromRole="FromRole_assoc_71FFED6377CEE153B33B40AE9BBC893F" ToRole="ToRole_assoc_71FFED6377CEE153B33B40AE9BBC893F"/>
+            </EntityType>
+            <EntityType Name="CategoriesType" sap:label="Categoria de Artigos Lista de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="Area"/>
+                    <PropertyRef Name="AreaText"/>
+                    <PropertyRef Name="Division"/>
+                    <PropertyRef Name="DivisionText"/>
+                    <PropertyRef Name="Family"/>
+                    <PropertyRef Name="FamilyText"/>
+                    <PropertyRef Name="Category"/>
+                    <PropertyRef Name="CategoryText"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Nº cliente"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="Area" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="AreaText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Division" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="DivisionText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Family" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="FamilyText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Category" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="CategoryText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="98"/>
+                <Property Name="numberOfProducts" Type="Edm.Byte"/>
+                <NavigationProperty Name="to_ShoppingListProdGroup" Relationship="cds_zsi_shoppingcompetitors.assoc_6AB51E4D8B78E0835D8B1120DC5F9360" FromRole="FromRole_assoc_6AB51E4D8B78E0835D8B1120DC5F9360" ToRole="ToRole_assoc_6AB51E4D8B78E0835D8B1120DC5F9360"/>
+                <NavigationProperty Name="to_ShoppingListProducts" Relationship="cds_zsi_shoppingcompetitors.assoc_2D347E1F869F6509F835E3E312D45D2F" FromRole="FromRole_assoc_2D347E1F869F6509F835E3E312D45D2F" ToRole="ToRole_assoc_2D347E1F869F6509F835E3E312D45D2F"/>
+            </EntityType>
+            <EntityType Name="FamiliesType" sap:label="Família de Artigos da Lista de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="Area"/>
+                    <PropertyRef Name="AreaText"/>
+                    <PropertyRef Name="Division"/>
+                    <PropertyRef Name="DivisionText"/>
+                    <PropertyRef Name="Family"/>
+                    <PropertyRef Name="FamilyText"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Nº cliente"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="Area" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="AreaText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Division" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="DivisionText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Family" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="FamilyText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="80"/>
+                <Property Name="numberOfProducts" Type="Edm.Byte"/>
+                <NavigationProperty Name="to_ShoppingListCategory" Relationship="cds_zsi_shoppingcompetitors.assoc_4570BD5F8F43927A6C880F2DA34489EF" FromRole="FromRole_assoc_4570BD5F8F43927A6C880F2DA34489EF" ToRole="ToRole_assoc_4570BD5F8F43927A6C880F2DA34489EF"/>
+                <NavigationProperty Name="to_ShoppingListProdGroup" Relationship="cds_zsi_shoppingcompetitors.assoc_7BB73B02D7BF8BEEC56A1F2C393A3714" FromRole="FromRole_assoc_7BB73B02D7BF8BEEC56A1F2C393A3714" ToRole="ToRole_assoc_7BB73B02D7BF8BEEC56A1F2C393A3714"/>
+                <NavigationProperty Name="to_ShoppingListProducts" Relationship="cds_zsi_shoppingcompetitors.assoc_6CDFD92713C82D038F3F37A5BEBA4D3E" FromRole="FromRole_assoc_6CDFD92713C82D038F3F37A5BEBA4D3E" ToRole="ToRole_assoc_6CDFD92713C82D038F3F37A5BEBA4D3E"/>
+            </EntityType>
+            <EntityType Name="DivisionsType" sap:label="Divisão de Artigos da Lista de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="Area"/>
+                    <PropertyRef Name="AreaText"/>
+                    <PropertyRef Name="Division"/>
+                    <PropertyRef Name="DivisionText"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Nº cliente"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="Area" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="AreaText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="Division" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="DivisionText" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="62"/>
+                <Property Name="numberOfProducts" Type="Edm.Byte"/>
+                <NavigationProperty Name="to_ShoppingListCategory" Relationship="cds_zsi_shoppingcompetitors.assoc_99DDE8F9B1814C32D85BCF98E1D5140C" FromRole="FromRole_assoc_99DDE8F9B1814C32D85BCF98E1D5140C" ToRole="ToRole_assoc_99DDE8F9B1814C32D85BCF98E1D5140C"/>
+                <NavigationProperty Name="to_ShoppingListFamily" Relationship="cds_zsi_shoppingcompetitors.assoc_05BC7F7C931361B6F26EF899512671D7" FromRole="FromRole_assoc_05BC7F7C931361B6F26EF899512671D7" ToRole="ToRole_assoc_05BC7F7C931361B6F26EF899512671D7"/>
+                <NavigationProperty Name="to_ShoppingListProdGroup" Relationship="cds_zsi_shoppingcompetitors.assoc_C8D2D5D6192341798D2CABD5936C99D3" FromRole="FromRole_assoc_C8D2D5D6192341798D2CABD5936C99D3" ToRole="ToRole_assoc_C8D2D5D6192341798D2CABD5936C99D3"/>
+                <NavigationProperty Name="to_ShoppingListProducts" Relationship="cds_zsi_shoppingcompetitors.assoc_488E268F64303C56495208E069B47AD6" FromRole="FromRole_assoc_488E268F64303C56495208E069B47AD6" ToRole="ToRole_assoc_488E268F64303C56495208E069B47AD6"/>
+            </EntityType>
+            <EntityType Name="AreasType" sap:label="Área de Artigos da Lista de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="Area"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Nº cliente"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="Area" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Classe" sap:quickinfo="Nº classe"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="44"/>
+                <Property Name="AreaText" Type="Edm.String" MaxLength="40" sap:label="Palavra-chave" sap:quickinfo="Palavras-chave"/>
+                <Property Name="numberOfProducts" Type="Edm.Byte"/>
+                <NavigationProperty Name="to_ShoppingListCategory" Relationship="cds_zsi_shoppingcompetitors.assoc_6249A0095E4EBA0DE71AB119715F170C" FromRole="FromRole_assoc_6249A0095E4EBA0DE71AB119715F170C" ToRole="ToRole_assoc_6249A0095E4EBA0DE71AB119715F170C"/>
+                <NavigationProperty Name="to_ShoppingListDivision" Relationship="cds_zsi_shoppingcompetitors.assoc_B5C7D904BD5511274C357C954075D224" FromRole="FromRole_assoc_B5C7D904BD5511274C357C954075D224" ToRole="ToRole_assoc_B5C7D904BD5511274C357C954075D224"/>
+                <NavigationProperty Name="to_ShoppingListFamily" Relationship="cds_zsi_shoppingcompetitors.assoc_2097B825B6788745685D5C9D23ACA48C" FromRole="FromRole_assoc_2097B825B6788745685D5C9D23ACA48C" ToRole="ToRole_assoc_2097B825B6788745685D5C9D23ACA48C"/>
+                <NavigationProperty Name="to_ShoppingListProdGroup" Relationship="cds_zsi_shoppingcompetitors.assoc_9F23590761775939E561D5EB286E2393" FromRole="FromRole_assoc_9F23590761775939E561D5EB286E2393" ToRole="ToRole_assoc_9F23590761775939E561D5EB286E2393"/>
+                <NavigationProperty Name="to_ShoppingListProducts" Relationship="cds_zsi_shoppingcompetitors.assoc_71141E4A264ADBCE12088A6CB0D0089A" FromRole="FromRole_assoc_71141E4A264ADBCE12088A6CB0D0089A" ToRole="ToRole_assoc_71141E4A264ADBCE12088A6CB0D0089A"/>
+            </EntityType>
+            <EntityType Name="ShoppingListType" sap:label="Lista de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="16"/>
+                <Property Name="AssortmentName" Type="Edm.String" MaxLength="40" sap:label="Descrição" sap:quickinfo="Denominação sortimentos"/>
+            </EntityType>
+            <EntityType Name="ProductALTType" sap:label="EAN de Produto de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Product"/>
+                    <PropertyRef Name="knumh"/>
+                </Key>
+                <Property Name="Product" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Produto" sap:quickinfo="Número do produto"/>
+                <Property Name="knumh" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Nº registro condição" sap:quickinfo="Nº de registro de condição"/>
+                <Property Name="YymatnrRef" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Material Base" sap:quickinfo="Nº material base"/>
+                <Property Name="Meins" Type="Edm.String" MaxLength="3" sap:label="Unid.medida básica" sap:quickinfo="Unidade de medida básica" sap:semantics="unit-of-measure"/>
+                <Property Name="YymatnrEquiv" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Material Equivalente" sap:quickinfo="Nº material concorrencia"/>
+                <Property Name="Vrkme" Type="Edm.String" MaxLength="3" sap:label="Unidade de venda" sap:semantics="unit-of-measure"/>
+                <Property Name="kbetr" Type="Edm.Decimal" Precision="12" Scale="3" sap:unit="konwa" sap:label="Montante de condição" sap:quickinfo="Montante/porcentagem de condição no caso de não haver escala"/>
+                <Property Name="konwa" Type="Edm.String" MaxLength="5" sap:label="Moeda de condição" sap:quickinfo="Unidade condição (moeda ou porcentagem)" sap:semantics="currency-code"/>
+                <Property Name="ProductAlt" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="to_EAN" Relationship="cds_zsi_shoppingcompetitors.assoc_2B01109B7DA0AAD691586E5CE262AE13" FromRole="FromRole_assoc_2B01109B7DA0AAD691586E5CE262AE13" ToRole="ToRole_assoc_2B01109B7DA0AAD691586E5CE262AE13"/>
+            </EntityType>
+            <EntityType Name="ProductEANType" sap:label="EAN de Produto de Shopping" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Product"/>
+                    <PropertyRef Name="AlternativeUnit"/>
+                    <PropertyRef Name="ConsecutiveNumber"/>
+                </Key>
+                <Property Name="Product" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Nº do material"/>
+                <Property Name="AlternativeUnit" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Unidade medida exib." sap:quickinfo="Unidade de medida para a exibição" sap:semantics="unit-of-measure"/>
+                <Property Name="ConsecutiveNumber" Type="Edm.String" Nullable="false" MaxLength="5" sap:display-format="UpperCase" sap:label="Nº sequencial"/>
+                <Property Name="ProductStandardID" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Código EAN/UPC" sap:quickinfo="Nº europeu do artigo (EAN)"/>
+                <Property Name="InternationalArticleNumberCat" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Categoria GTIN" sap:quickinfo="Categoria do número global de item comercial (GTIN)"/>
+                <Property Name="IsMainGlobalTradeItemNumber" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Cód.: EAN princ." sap:quickinfo="Código EAN principal"/>
+                <Property Name="QuantityNumerator" Type="Edm.Decimal" Precision="5" Scale="0" sap:label="Contador" sap:quickinfo="Contador para a conversão em UMs básicas"/>
+                <Property Name="QuantityDenominator" Type="Edm.Decimal" Precision="5" Scale="0" sap:label="Denominador" sap:quickinfo="Denominador para a conversão em unidades de medida básicas"/>
+                <Property Name="BaseUnit" Type="Edm.String" MaxLength="3" sap:label="Unid.medida básica" sap:quickinfo="Unidade de medida básica" sap:semantics="unit-of-measure"/>
+            </EntityType>
+            <EntityType Name="CompetitorShopListType" sap:label="Listas de Shopping de Shopper" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Assortment"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                    <PropertyRef Name="DistributionChannel"/>
+                </Key>
+                <Property Name="Assortment" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sortimento"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Nº cliente"/>
+                <Property Name="SalesOrganization" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Organização vendas" sap:quickinfo="Organização de vendas"/>
+                <Property Name="DistributionChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:label="Canal distribuição" sap:quickinfo="Canal de distribuição"/>
+                <Property Name="SyncKey" Type="Edm.String" MaxLength="26"/>
+                <Property Name="AssortmentName" Type="Edm.String" MaxLength="40" sap:label="Descrição" sap:quickinfo="Denominação sortimentos"/>
+                <Property Name="SalesOrganizationName" Type="Edm.String" MaxLength="20" sap:label="Descrição de organização de vendas"/>
+                <Property Name="DistributionChannelName" Type="Edm.String" MaxLength="20" sap:label="Descrição do canal de distribuição"/>
+                <Property Name="CustomerFullName" Type="Edm.String" MaxLength="220" sap:display-format="UpperCase" sap:label="Nome do cliente" sap:quickinfo="Nome completo do cliente"/>
+                <Property Name="PostalCode" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Código postal"/>
+                <Property Name="CityName" Type="Edm.String" MaxLength="35" sap:label="Local"/>
+                <Property Name="StreetName" Type="Edm.String" MaxLength="35" sap:label="Rua" sap:quickinfo="Rua e nº"/>
+                <Property Name="Region" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Região" sap:quickinfo="Região (estado federal, estado federado, província, condado)"/>
+                <NavigationProperty Name="to_ShoppingList" Relationship="cds_zsi_shoppingcompetitors.assoc_4E6C6E7D92A8D68C7400720D1B2A5198" FromRole="FromRole_assoc_4E6C6E7D92A8D68C7400720D1B2A5198" ToRole="ToRole_assoc_4E6C6E7D92A8D68C7400720D1B2A5198"/>
+                <NavigationProperty Name="to_ShoppingListArea" Relationship="cds_zsi_shoppingcompetitors.assoc_34A6C8306EAAE0A6C984AACEE15E757F" FromRole="FromRole_assoc_34A6C8306EAAE0A6C984AACEE15E757F" ToRole="ToRole_assoc_34A6C8306EAAE0A6C984AACEE15E757F"/>
+                <NavigationProperty Name="to_ShoppingListCategory" Relationship="cds_zsi_shoppingcompetitors.assoc_1E1F94C53C13B326D3FF47F3F73AD6E6" FromRole="FromRole_assoc_1E1F94C53C13B326D3FF47F3F73AD6E6" ToRole="ToRole_assoc_1E1F94C53C13B326D3FF47F3F73AD6E6"/>
+                <NavigationProperty Name="to_ShoppingListDivision" Relationship="cds_zsi_shoppingcompetitors.assoc_8215D1CF5006B63B6843ACFA0FC2A6F7" FromRole="FromRole_assoc_8215D1CF5006B63B6843ACFA0FC2A6F7" ToRole="ToRole_assoc_8215D1CF5006B63B6843ACFA0FC2A6F7"/>
+                <NavigationProperty Name="to_ShoppingListFamily" Relationship="cds_zsi_shoppingcompetitors.assoc_3F14980167886EC528370EE298490BEA" FromRole="FromRole_assoc_3F14980167886EC528370EE298490BEA" ToRole="ToRole_assoc_3F14980167886EC528370EE298490BEA"/>
+                <NavigationProperty Name="to_ShoppingListProdGroup" Relationship="cds_zsi_shoppingcompetitors.assoc_D3518FEB12E4BE0F7CA79FF689033D45" FromRole="FromRole_assoc_D3518FEB12E4BE0F7CA79FF689033D45" ToRole="ToRole_assoc_D3518FEB12E4BE0F7CA79FF689033D45"/>
+                <NavigationProperty Name="to_ShoppingListProducts" Relationship="cds_zsi_shoppingcompetitors.assoc_C4EDAF126DD790E36420C0FBF9A2D29D" FromRole="FromRole_assoc_C4EDAF126DD790E36420C0FBF9A2D29D" ToRole="ToRole_assoc_C4EDAF126DD790E36420C0FBF9A2D29D"/>
+                <NavigationProperty Name="to_UserCard" Relationship="cds_zsi_shoppingcompetitors.assoc_EF3F168489C4D408C35306D04FB79CBC" FromRole="FromRole_assoc_EF3F168489C4D408C35306D04FB79CBC" ToRole="ToRole_assoc_EF3F168489C4D408C35306D04FB79CBC"/>
+            </EntityType>
+            <EntityType Name="UserCardType" sap:label="UserLogged" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ContactCardID"/>
+                </Key>
+                <Property Name="ContactCardID" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:text="UserDescription" sap:label="Usuário" sap:quickinfo="Nome do usuário no mestre de usuários"/>
+                <Property Name="Person" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Nº pessoa"/>
+                <Property Name="BusinessPartnerUUID" Type="Edm.Guid" sap:label="GUID PN" sap:quickinfo="GUID de um parceiro de negócios"/>
+                <Property Name="FirstName" Type="Edm.String" MaxLength="40" sap:label="1º nome"/>
+                <Property Name="LastName" Type="Edm.String" MaxLength="40" sap:label="Sobrenome"/>
+                <Property Name="FullName" Type="Edm.String" MaxLength="80" sap:label="Nome completo" sap:quickinfo="Nome completo da pessoa"/>
+                <Property Name="UserDescription" Type="Edm.String" MaxLength="80" sap:label="Descrição" sap:quickinfo="Descrição do usuário"/>
+                <Property Name="AddressID" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Nº endereço"/>
+                <Property Name="PhoneNumber" Type="Edm.String" MaxLength="30" sap:label="Telefone" sap:quickinfo="Número de telefone de cartão de contato" sap:semantics="tel"/>
+                <Property Name="MobilePhoneNumber" Type="Edm.String" MaxLength="30" sap:label="Telefone celular" sap:quickinfo="Número do celular do cartão de contato" sap:semantics="tel"/>
+                <Property Name="FaxNumber" Type="Edm.String" MaxLength="30" sap:label="Fax" sap:quickinfo="Número de fax do cartão de contato" sap:semantics="tel"/>
+                <Property Name="EmailAddress" Type="Edm.String" MaxLength="241" sap:label="E-mail" sap:quickinfo="Endereço de e-mail do cartão de contato" sap:semantics="email"/>
+                <Property Name="Department" Type="Edm.String" MaxLength="40" sap:label="Departamento"/>
+                <Property Name="FunctionalTitleName" Type="Edm.String" MaxLength="40" sap:label="Função"/>
+                <Property Name="ContactCardRole" Type="Edm.String" MaxLength="7"/>
+                <Property Name="ContactCardType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="ContactCardNavLinkSemanticObj" Type="Edm.String" MaxLength="4"/>
+                <Property Name="ContactCardNavLinkQueryPart" Type="Edm.String" MaxLength="17"/>
+            </EntityType>
+            <Association Name="assoc_CA2761E6BD6A68C475FE53BE1AB8EC62" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="1" Role="FromRole_assoc_CA2761E6BD6A68C475FE53BE1AB8EC62"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductEANType" Multiplicity="*" Role="ToRole_assoc_CA2761E6BD6A68C475FE53BE1AB8EC62"/>
+            </Association>
+            <Association Name="assoc_91FEAF712FCDE85422CB9F73C0823B02" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="1" Role="FromRole_assoc_91FEAF712FCDE85422CB9F73C0823B02"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductALTType" Multiplicity="*" Role="ToRole_assoc_91FEAF712FCDE85422CB9F73C0823B02"/>
+            </Association>
+            <Association Name="assoc_71FFED6377CEE153B33B40AE9BBC893F" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.ProductGroupsType" Multiplicity="1" Role="FromRole_assoc_71FFED6377CEE153B33B40AE9BBC893F"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="*" Role="ToRole_assoc_71FFED6377CEE153B33B40AE9BBC893F"/>
+            </Association>
+            <Association Name="assoc_99DDE8F9B1814C32D85BCF98E1D5140C" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.DivisionsType" Multiplicity="1" Role="FromRole_assoc_99DDE8F9B1814C32D85BCF98E1D5140C"/>
+                <End Type="cds_zsi_shoppingcompetitors.CategoriesType" Multiplicity="*" Role="ToRole_assoc_99DDE8F9B1814C32D85BCF98E1D5140C"/>
+            </Association>
+            <Association Name="assoc_05BC7F7C931361B6F26EF899512671D7" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.DivisionsType" Multiplicity="1" Role="FromRole_assoc_05BC7F7C931361B6F26EF899512671D7"/>
+                <End Type="cds_zsi_shoppingcompetitors.FamiliesType" Multiplicity="*" Role="ToRole_assoc_05BC7F7C931361B6F26EF899512671D7"/>
+            </Association>
+            <Association Name="assoc_C8D2D5D6192341798D2CABD5936C99D3" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.DivisionsType" Multiplicity="1" Role="FromRole_assoc_C8D2D5D6192341798D2CABD5936C99D3"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductGroupsType" Multiplicity="*" Role="ToRole_assoc_C8D2D5D6192341798D2CABD5936C99D3"/>
+            </Association>
+            <Association Name="assoc_488E268F64303C56495208E069B47AD6" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.DivisionsType" Multiplicity="1" Role="FromRole_assoc_488E268F64303C56495208E069B47AD6"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="*" Role="ToRole_assoc_488E268F64303C56495208E069B47AD6"/>
+            </Association>
+            <Association Name="assoc_4E6C6E7D92A8D68C7400720D1B2A5198" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_4E6C6E7D92A8D68C7400720D1B2A5198"/>
+                <End Type="cds_zsi_shoppingcompetitors.ShoppingListType" Multiplicity="1" Role="ToRole_assoc_4E6C6E7D92A8D68C7400720D1B2A5198"/>
+            </Association>
+            <Association Name="assoc_34A6C8306EAAE0A6C984AACEE15E757F" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_34A6C8306EAAE0A6C984AACEE15E757F"/>
+                <End Type="cds_zsi_shoppingcompetitors.AreasType" Multiplicity="*" Role="ToRole_assoc_34A6C8306EAAE0A6C984AACEE15E757F"/>
+            </Association>
+            <Association Name="assoc_1E1F94C53C13B326D3FF47F3F73AD6E6" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_1E1F94C53C13B326D3FF47F3F73AD6E6"/>
+                <End Type="cds_zsi_shoppingcompetitors.CategoriesType" Multiplicity="*" Role="ToRole_assoc_1E1F94C53C13B326D3FF47F3F73AD6E6"/>
+            </Association>
+            <Association Name="assoc_8215D1CF5006B63B6843ACFA0FC2A6F7" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_8215D1CF5006B63B6843ACFA0FC2A6F7"/>
+                <End Type="cds_zsi_shoppingcompetitors.DivisionsType" Multiplicity="*" Role="ToRole_assoc_8215D1CF5006B63B6843ACFA0FC2A6F7"/>
+            </Association>
+            <Association Name="assoc_3F14980167886EC528370EE298490BEA" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_3F14980167886EC528370EE298490BEA"/>
+                <End Type="cds_zsi_shoppingcompetitors.FamiliesType" Multiplicity="*" Role="ToRole_assoc_3F14980167886EC528370EE298490BEA"/>
+            </Association>
+            <Association Name="assoc_D3518FEB12E4BE0F7CA79FF689033D45" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_D3518FEB12E4BE0F7CA79FF689033D45"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductGroupsType" Multiplicity="*" Role="ToRole_assoc_D3518FEB12E4BE0F7CA79FF689033D45"/>
+            </Association>
+            <Association Name="assoc_C4EDAF126DD790E36420C0FBF9A2D29D" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_C4EDAF126DD790E36420C0FBF9A2D29D"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="*" Role="ToRole_assoc_C4EDAF126DD790E36420C0FBF9A2D29D"/>
+            </Association>
+            <Association Name="assoc_EF3F168489C4D408C35306D04FB79CBC" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CompetitorShopListType" Multiplicity="1" Role="FromRole_assoc_EF3F168489C4D408C35306D04FB79CBC"/>
+                <End Type="cds_zsi_shoppingcompetitors.UserCardType" Multiplicity="0..1" Role="ToRole_assoc_EF3F168489C4D408C35306D04FB79CBC"/>
+            </Association>
+            <Association Name="assoc_6249A0095E4EBA0DE71AB119715F170C" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.AreasType" Multiplicity="1" Role="FromRole_assoc_6249A0095E4EBA0DE71AB119715F170C"/>
+                <End Type="cds_zsi_shoppingcompetitors.CategoriesType" Multiplicity="*" Role="ToRole_assoc_6249A0095E4EBA0DE71AB119715F170C"/>
+            </Association>
+            <Association Name="assoc_B5C7D904BD5511274C357C954075D224" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.AreasType" Multiplicity="1" Role="FromRole_assoc_B5C7D904BD5511274C357C954075D224"/>
+                <End Type="cds_zsi_shoppingcompetitors.DivisionsType" Multiplicity="*" Role="ToRole_assoc_B5C7D904BD5511274C357C954075D224"/>
+            </Association>
+            <Association Name="assoc_2097B825B6788745685D5C9D23ACA48C" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.AreasType" Multiplicity="1" Role="FromRole_assoc_2097B825B6788745685D5C9D23ACA48C"/>
+                <End Type="cds_zsi_shoppingcompetitors.FamiliesType" Multiplicity="*" Role="ToRole_assoc_2097B825B6788745685D5C9D23ACA48C"/>
+            </Association>
+            <Association Name="assoc_9F23590761775939E561D5EB286E2393" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.AreasType" Multiplicity="1" Role="FromRole_assoc_9F23590761775939E561D5EB286E2393"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductGroupsType" Multiplicity="*" Role="ToRole_assoc_9F23590761775939E561D5EB286E2393"/>
+            </Association>
+            <Association Name="assoc_71141E4A264ADBCE12088A6CB0D0089A" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.AreasType" Multiplicity="1" Role="FromRole_assoc_71141E4A264ADBCE12088A6CB0D0089A"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="*" Role="ToRole_assoc_71141E4A264ADBCE12088A6CB0D0089A"/>
+            </Association>
+            <Association Name="assoc_2B01109B7DA0AAD691586E5CE262AE13" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.ProductALTType" Multiplicity="1" Role="FromRole_assoc_2B01109B7DA0AAD691586E5CE262AE13"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductEANType" Multiplicity="*" Role="ToRole_assoc_2B01109B7DA0AAD691586E5CE262AE13"/>
+            </Association>
+            <Association Name="assoc_6AB51E4D8B78E0835D8B1120DC5F9360" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CategoriesType" Multiplicity="1" Role="FromRole_assoc_6AB51E4D8B78E0835D8B1120DC5F9360"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductGroupsType" Multiplicity="*" Role="ToRole_assoc_6AB51E4D8B78E0835D8B1120DC5F9360"/>
+            </Association>
+            <Association Name="assoc_2D347E1F869F6509F835E3E312D45D2F" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.CategoriesType" Multiplicity="1" Role="FromRole_assoc_2D347E1F869F6509F835E3E312D45D2F"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="*" Role="ToRole_assoc_2D347E1F869F6509F835E3E312D45D2F"/>
+            </Association>
+            <Association Name="assoc_4570BD5F8F43927A6C880F2DA34489EF" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.FamiliesType" Multiplicity="1" Role="FromRole_assoc_4570BD5F8F43927A6C880F2DA34489EF"/>
+                <End Type="cds_zsi_shoppingcompetitors.CategoriesType" Multiplicity="*" Role="ToRole_assoc_4570BD5F8F43927A6C880F2DA34489EF"/>
+            </Association>
+            <Association Name="assoc_7BB73B02D7BF8BEEC56A1F2C393A3714" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.FamiliesType" Multiplicity="1" Role="FromRole_assoc_7BB73B02D7BF8BEEC56A1F2C393A3714"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductGroupsType" Multiplicity="*" Role="ToRole_assoc_7BB73B02D7BF8BEEC56A1F2C393A3714"/>
+            </Association>
+            <Association Name="assoc_6CDFD92713C82D038F3F37A5BEBA4D3E" sap:content-version="1">
+                <End Type="cds_zsi_shoppingcompetitors.FamiliesType" Multiplicity="1" Role="FromRole_assoc_6CDFD92713C82D038F3F37A5BEBA4D3E"/>
+                <End Type="cds_zsi_shoppingcompetitors.ProductsType" Multiplicity="*" Role="ToRole_assoc_6CDFD92713C82D038F3F37A5BEBA4D3E"/>
+            </Association>
+            <EntityContainer Name="cds_zsi_shoppingcompetitors_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="Products" EntityType="cds_zsi_shoppingcompetitors.ProductsType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ProductGroups" EntityType="cds_zsi_shoppingcompetitors.ProductGroupsType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Categories" EntityType="cds_zsi_shoppingcompetitors.CategoriesType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Families" EntityType="cds_zsi_shoppingcompetitors.FamiliesType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Divisions" EntityType="cds_zsi_shoppingcompetitors.DivisionsType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="Areas" EntityType="cds_zsi_shoppingcompetitors.AreasType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ShoppingList" EntityType="cds_zsi_shoppingcompetitors.ShoppingListType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ProductALT" EntityType="cds_zsi_shoppingcompetitors.ProductALTType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ProductEAN" EntityType="cds_zsi_shoppingcompetitors.ProductEANType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="CompetitorShopList" EntityType="cds_zsi_shoppingcompetitors.CompetitorShopListType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="UserCard" EntityType="cds_zsi_shoppingcompetitors.UserCardType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <AssociationSet Name="assoc_05BC7F7C931361B6F26EF899512671D7" Association="cds_zsi_shoppingcompetitors.assoc_05BC7F7C931361B6F26EF899512671D7" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Divisions" Role="FromRole_assoc_05BC7F7C931361B6F26EF899512671D7"/>
+                    <End EntitySet="Families" Role="ToRole_assoc_05BC7F7C931361B6F26EF899512671D7"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_2097B825B6788745685D5C9D23ACA48C" Association="cds_zsi_shoppingcompetitors.assoc_2097B825B6788745685D5C9D23ACA48C" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Areas" Role="FromRole_assoc_2097B825B6788745685D5C9D23ACA48C"/>
+                    <End EntitySet="Families" Role="ToRole_assoc_2097B825B6788745685D5C9D23ACA48C"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_1E1F94C53C13B326D3FF47F3F73AD6E6" Association="cds_zsi_shoppingcompetitors.assoc_1E1F94C53C13B326D3FF47F3F73AD6E6" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_1E1F94C53C13B326D3FF47F3F73AD6E6"/>
+                    <End EntitySet="Categories" Role="ToRole_assoc_1E1F94C53C13B326D3FF47F3F73AD6E6"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_6CDFD92713C82D038F3F37A5BEBA4D3E" Association="cds_zsi_shoppingcompetitors.assoc_6CDFD92713C82D038F3F37A5BEBA4D3E" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Families" Role="FromRole_assoc_6CDFD92713C82D038F3F37A5BEBA4D3E"/>
+                    <End EntitySet="Products" Role="ToRole_assoc_6CDFD92713C82D038F3F37A5BEBA4D3E"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_2B01109B7DA0AAD691586E5CE262AE13" Association="cds_zsi_shoppingcompetitors.assoc_2B01109B7DA0AAD691586E5CE262AE13" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ProductALT" Role="FromRole_assoc_2B01109B7DA0AAD691586E5CE262AE13"/>
+                    <End EntitySet="ProductEAN" Role="ToRole_assoc_2B01109B7DA0AAD691586E5CE262AE13"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_EF3F168489C4D408C35306D04FB79CBC" Association="cds_zsi_shoppingcompetitors.assoc_EF3F168489C4D408C35306D04FB79CBC" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_EF3F168489C4D408C35306D04FB79CBC"/>
+                    <End EntitySet="UserCard" Role="ToRole_assoc_EF3F168489C4D408C35306D04FB79CBC"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_C8D2D5D6192341798D2CABD5936C99D3" Association="cds_zsi_shoppingcompetitors.assoc_C8D2D5D6192341798D2CABD5936C99D3" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Divisions" Role="FromRole_assoc_C8D2D5D6192341798D2CABD5936C99D3"/>
+                    <End EntitySet="ProductGroups" Role="ToRole_assoc_C8D2D5D6192341798D2CABD5936C99D3"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_4E6C6E7D92A8D68C7400720D1B2A5198" Association="cds_zsi_shoppingcompetitors.assoc_4E6C6E7D92A8D68C7400720D1B2A5198" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_4E6C6E7D92A8D68C7400720D1B2A5198"/>
+                    <End EntitySet="ShoppingList" Role="ToRole_assoc_4E6C6E7D92A8D68C7400720D1B2A5198"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_4570BD5F8F43927A6C880F2DA34489EF" Association="cds_zsi_shoppingcompetitors.assoc_4570BD5F8F43927A6C880F2DA34489EF" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Families" Role="FromRole_assoc_4570BD5F8F43927A6C880F2DA34489EF"/>
+                    <End EntitySet="Categories" Role="ToRole_assoc_4570BD5F8F43927A6C880F2DA34489EF"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_91FEAF712FCDE85422CB9F73C0823B02" Association="cds_zsi_shoppingcompetitors.assoc_91FEAF712FCDE85422CB9F73C0823B02" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Products" Role="FromRole_assoc_91FEAF712FCDE85422CB9F73C0823B02"/>
+                    <End EntitySet="ProductALT" Role="ToRole_assoc_91FEAF712FCDE85422CB9F73C0823B02"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_B5C7D904BD5511274C357C954075D224" Association="cds_zsi_shoppingcompetitors.assoc_B5C7D904BD5511274C357C954075D224" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Areas" Role="FromRole_assoc_B5C7D904BD5511274C357C954075D224"/>
+                    <End EntitySet="Divisions" Role="ToRole_assoc_B5C7D904BD5511274C357C954075D224"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_3F14980167886EC528370EE298490BEA" Association="cds_zsi_shoppingcompetitors.assoc_3F14980167886EC528370EE298490BEA" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_3F14980167886EC528370EE298490BEA"/>
+                    <End EntitySet="Families" Role="ToRole_assoc_3F14980167886EC528370EE298490BEA"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_D3518FEB12E4BE0F7CA79FF689033D45" Association="cds_zsi_shoppingcompetitors.assoc_D3518FEB12E4BE0F7CA79FF689033D45" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_D3518FEB12E4BE0F7CA79FF689033D45"/>
+                    <End EntitySet="ProductGroups" Role="ToRole_assoc_D3518FEB12E4BE0F7CA79FF689033D45"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_9F23590761775939E561D5EB286E2393" Association="cds_zsi_shoppingcompetitors.assoc_9F23590761775939E561D5EB286E2393" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Areas" Role="FromRole_assoc_9F23590761775939E561D5EB286E2393"/>
+                    <End EntitySet="ProductGroups" Role="ToRole_assoc_9F23590761775939E561D5EB286E2393"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_71141E4A264ADBCE12088A6CB0D0089A" Association="cds_zsi_shoppingcompetitors.assoc_71141E4A264ADBCE12088A6CB0D0089A" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Areas" Role="FromRole_assoc_71141E4A264ADBCE12088A6CB0D0089A"/>
+                    <End EntitySet="Products" Role="ToRole_assoc_71141E4A264ADBCE12088A6CB0D0089A"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_7BB73B02D7BF8BEEC56A1F2C393A3714" Association="cds_zsi_shoppingcompetitors.assoc_7BB73B02D7BF8BEEC56A1F2C393A3714" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Families" Role="FromRole_assoc_7BB73B02D7BF8BEEC56A1F2C393A3714"/>
+                    <End EntitySet="ProductGroups" Role="ToRole_assoc_7BB73B02D7BF8BEEC56A1F2C393A3714"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_34A6C8306EAAE0A6C984AACEE15E757F" Association="cds_zsi_shoppingcompetitors.assoc_34A6C8306EAAE0A6C984AACEE15E757F" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_34A6C8306EAAE0A6C984AACEE15E757F"/>
+                    <End EntitySet="Areas" Role="ToRole_assoc_34A6C8306EAAE0A6C984AACEE15E757F"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_2D347E1F869F6509F835E3E312D45D2F" Association="cds_zsi_shoppingcompetitors.assoc_2D347E1F869F6509F835E3E312D45D2F" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Categories" Role="FromRole_assoc_2D347E1F869F6509F835E3E312D45D2F"/>
+                    <End EntitySet="Products" Role="ToRole_assoc_2D347E1F869F6509F835E3E312D45D2F"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_99DDE8F9B1814C32D85BCF98E1D5140C" Association="cds_zsi_shoppingcompetitors.assoc_99DDE8F9B1814C32D85BCF98E1D5140C" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Divisions" Role="FromRole_assoc_99DDE8F9B1814C32D85BCF98E1D5140C"/>
+                    <End EntitySet="Categories" Role="ToRole_assoc_99DDE8F9B1814C32D85BCF98E1D5140C"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_CA2761E6BD6A68C475FE53BE1AB8EC62" Association="cds_zsi_shoppingcompetitors.assoc_CA2761E6BD6A68C475FE53BE1AB8EC62" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Products" Role="FromRole_assoc_CA2761E6BD6A68C475FE53BE1AB8EC62"/>
+                    <End EntitySet="ProductEAN" Role="ToRole_assoc_CA2761E6BD6A68C475FE53BE1AB8EC62"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_C4EDAF126DD790E36420C0FBF9A2D29D" Association="cds_zsi_shoppingcompetitors.assoc_C4EDAF126DD790E36420C0FBF9A2D29D" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_C4EDAF126DD790E36420C0FBF9A2D29D"/>
+                    <End EntitySet="Products" Role="ToRole_assoc_C4EDAF126DD790E36420C0FBF9A2D29D"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_8215D1CF5006B63B6843ACFA0FC2A6F7" Association="cds_zsi_shoppingcompetitors.assoc_8215D1CF5006B63B6843ACFA0FC2A6F7" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CompetitorShopList" Role="FromRole_assoc_8215D1CF5006B63B6843ACFA0FC2A6F7"/>
+                    <End EntitySet="Divisions" Role="ToRole_assoc_8215D1CF5006B63B6843ACFA0FC2A6F7"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_71FFED6377CEE153B33B40AE9BBC893F" Association="cds_zsi_shoppingcompetitors.assoc_71FFED6377CEE153B33B40AE9BBC893F" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ProductGroups" Role="FromRole_assoc_71FFED6377CEE153B33B40AE9BBC893F"/>
+                    <End EntitySet="Products" Role="ToRole_assoc_71FFED6377CEE153B33B40AE9BBC893F"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_6AB51E4D8B78E0835D8B1120DC5F9360" Association="cds_zsi_shoppingcompetitors.assoc_6AB51E4D8B78E0835D8B1120DC5F9360" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Categories" Role="FromRole_assoc_6AB51E4D8B78E0835D8B1120DC5F9360"/>
+                    <End EntitySet="ProductGroups" Role="ToRole_assoc_6AB51E4D8B78E0835D8B1120DC5F9360"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_6249A0095E4EBA0DE71AB119715F170C" Association="cds_zsi_shoppingcompetitors.assoc_6249A0095E4EBA0DE71AB119715F170C" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Areas" Role="FromRole_assoc_6249A0095E4EBA0DE71AB119715F170C"/>
+                    <End EntitySet="Categories" Role="ToRole_assoc_6249A0095E4EBA0DE71AB119715F170C"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_488E268F64303C56495208E069B47AD6" Association="cds_zsi_shoppingcompetitors.assoc_488E268F64303C56495208E069B47AD6" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Divisions" Role="FromRole_assoc_488E268F64303C56495208E069B47AD6"/>
+                    <End EntitySet="Products" Role="ToRole_assoc_488E268F64303C56495208E069B47AD6"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations Target="cds_zsi_shoppingcompetitors.cds_zsi_shoppingcompetitors_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+                <Annotation Term="Aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="None"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="cds_zsi_shoppingcompetitors.CompetitorShopListType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Communication.Contact">
+                    <Record>
+                        <PropertyValue Property="fn" Path="CustomerFullName"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="cds_zsi_shoppingcompetitors.UserCardType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Communication.Contact">
+                    <Record>
+                        <PropertyValue Property="fn" Path="FullName"/>
+                        <PropertyValue Property="org" Path="Department"/>
+                        <PropertyValue Property="role" Path="FunctionalTitleName"/>
+                        <PropertyValue Property="n">
+                            <Record>
+                                <PropertyValue Property="given" Path="FirstName"/>
+                                <PropertyValue Property="surname" Path="LastName"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="tel">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="type" EnumMember="Communication.PhoneType/fax"/>
+                                    <PropertyValue Property="uri" Path="FaxNumber"/>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="type" EnumMember="Communication.PhoneType/cell"/>
+                                    <PropertyValue Property="uri" Path="MobilePhoneNumber"/>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="type" EnumMember="Communication.PhoneType/work"/>
+                                    <PropertyValue Property="uri" Path="PhoneNumber"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="email">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="type" EnumMember="Communication.ContactInformationType/work"/>
+                                    <PropertyValue Property="address" Path="EmailAddress"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="cds_zsi_shoppingcompetitors.UserCardType/EmailAddress" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Communication.IsEmailAddress"/>
+            </Annotations>
+            <Annotations Target="cds_zsi_shoppingcompetitors.UserCardType/PhoneNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Communication.IsPhoneNumber"/>
+            </Annotations>
+            <Annotations Target="cds_zsi_shoppingcompetitors.UserCardType/MobilePhoneNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Communication.IsPhoneNumber"/>
+            </Annotations>
+            <Annotations Target="cds_zsi_shoppingcompetitors.UserCardType/FaxNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Communication.IsPhoneNumber"/>
+            </Annotations>
+            <atom:link rel="self" href="http://192.168.40.171:8000/sap/opu/odata/sap/ZSD_SHOPPINGCOMPETITORS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://192.168.40.171:8000/sap/opu/odata/sap/ZSD_SHOPPINGCOMPETITORS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
