@@ -3,11 +3,11 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/MessageToast"
-], function (BaseController, JSONModel, Filter, FilterOperator, MessageToast) {
+    "sap/m/MessageToast",
+    "com/financor/sd/shoppingapp/services/DatabaseService",
+    "com/financor/sd/shoppingapp/utils/Formatters"
+], function (BaseController, JSONModel, Filter, FilterOperator, MessageToast, DatabaseService, Formatters) {
     "use strict";
-
-    const LOCAL_DB_NAME = "financorDB";
 
     return BaseController.extend("com.financor.sd.shoppingapp.controller.Collect.CollectedPrices", {
 
@@ -29,7 +29,7 @@ sap.ui.define([
             this.getView().setBusy(true);
 
             try {
-                const db = new PouchDB(LOCAL_DB_NAME);
+                const db = DatabaseService.getDB();
                 const result = await db.allDocs({ include_docs: true });
 
                 const aCollectedProducts = result.rows

@@ -2,15 +2,15 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "com/financor/sd/shoppingapp/controller/BaseController",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-], function (Controller, BaseController, MessageBox, MessageToast) {
+    "sap/m/MessageToast",
+    "com/financor/sd/shoppingapp/services/DatabaseService"
+], function (Controller, BaseController, MessageBox, MessageToast, DatabaseService) {
     "use strict";
-    const LOCAL_DB_NAME = "financorDB"; // Nome do seu PouchDB local
 
     return BaseController.extend("com.financor.sd.shoppingapp.controller.Competitors.Competitor", {
 
         onInit: function () {
-            const db = new PouchDB(LOCAL_DB_NAME);
+            const db = DatabaseService.getDB();
             const oView = this.getView();
 
             db.allDocs({ include_docs: true }).then(result => {
@@ -37,7 +37,7 @@ sap.ui.define([
         },
         _loadCompetitorsFromPouchDB: async function () {
 
-            const db = new PouchDB(LOCAL_DB_NAME);
+            const db = DatabaseService.getDB();
 
             try {
 

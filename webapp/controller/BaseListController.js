@@ -2,12 +2,10 @@ sap.ui.define([
     "com/financor/sd/shoppingapp/controller/BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "sap/ui/core/routing/History"
-], function (BaseController, JSONModel, MessageBox, History) {
+    "sap/ui/core/routing/History",
+    "com/financor/sd/shoppingapp/services/DatabaseService"
+], function (BaseController, JSONModel, MessageBox, History, DatabaseService) {
     "use strict";
-
-    // nome banco
-    const LOCAL_DB_NAME = "financorDB";
 
     return BaseController.extend("com.financor.sd.shoppingapp.controller.BaseListController", {
 
@@ -27,7 +25,7 @@ sap.ui.define([
             }
         },
         _loadEntitySet: async function (sEntityName, aParentFilters = []) {
-            const db = new PouchDB(LOCAL_DB_NAME);
+            const db = DatabaseService.getDB();
             this.getView().setBusy(true);
 
             try {

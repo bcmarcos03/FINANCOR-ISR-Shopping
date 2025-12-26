@@ -5,11 +5,12 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/Fragment",
 	"sap/ui/core/format/DateFormat",
-	"sap/ui/model/odata/v2/ODataModel"
-], function (BaseController, MessageBox, MessageToast, JSONModel, Fragment, DateFormat, ODataModel) {
+	"sap/ui/model/odata/v2/ODataModel",
+	"com/financor/sd/shoppingapp/utils/Constants",
+	"com/financor/sd/shoppingapp/services/DatabaseService",
+	"com/financor/sd/shoppingapp/utils/Formatters"
+], function (BaseController, MessageBox, MessageToast, JSONModel, Fragment, DateFormat, ODataModel, Constants, DatabaseService, Formatters) {
 	"use strict";
-
-	const LOCAL_DB_NAME = "financorDB";
 
 	return BaseController.extend("com.financor.sd.shoppingapp.controller.Main", {
 		_oUserCardPopover: null,
@@ -47,11 +48,11 @@ sap.ui.define([
 		// ============================================================
 
 		onPressShopping: function () {
-			this.getOwnerComponent().getRouter().navTo("competitors");
+			this.getOwnerComponent().getRouter().navTo(Constants.ROUTES.COMPETITORS);
 		},
 
 		onPressCollectedPrices: function () {
-			this.getOwnerComponent().getRouter().navTo("CollectedPrices");
+			this.getOwnerComponent().getRouter().navTo(Constants.ROUTES.COLLECTED_PRICES);
 		},
 
 		// ============================================================
@@ -60,7 +61,7 @@ sap.ui.define([
 
 		onPressSync: async function () {
 			if (!navigator.onLine) {
-				MessageBox.error("Você está offline. A sincronização requer conexão com a internet.");
+				MessageBox.error(this.getResourceBundle().getText("OfflineSyncError"));
 				return;
 			}
 
@@ -80,7 +81,7 @@ sap.ui.define([
 			let uploadResult = { success: 0, failed: 0, errors: [] };
 				
 
-				const db = new PouchDB(LOCAL_DB_NAME);
+				const db = DatabaseService.getDB();
 
 				// Upload collected products to OData (if needed)
 				try {
@@ -101,7 +102,7 @@ sap.ui.define([
 					if (productsToUpdate.docs.length > 0) {
 						try {
 						// Show progress to user
-						MessageToast.show(`Enviando ${productsToUpdate.docs.length} preços coletados...`);
+						MessageToast.show(this.getResourceBundle().getText("SendingPricesMessage", [productsToUpdate.docs.length]));
 
 						// Upload collected prices to server
 						uploadResult = await this._savePouchDBToOdata(oModel, productsToUpdate.docs);
@@ -168,7 +169,7 @@ sap.ui.define([
 				}
 
 				// Enhanced success message with upload count
-			let successMessage = "Sincronização Concluída";
+			let successMessage = this.getResourceBundle().getText("SyncCompletedTitle");
 			if (uploadResult.success > 0) {
 				successMessage = `${uploadResult.success} preços enviados. ${successMessage}`;
 			}
@@ -179,7 +180,7 @@ sap.ui.define([
 
 			} catch (error) {
 				console.error("Sync failed:", error);
-				MessageBox.error("Falha na Sincronização");
+				MessageBox.error(this.getResourceBundle().getText("SyncFailedTitle"));
 			} finally {
 				this.getView().setBusy(false);
 			}
@@ -187,7 +188,7 @@ sap.ui.define([
 
 		_loadPendingSyncCount: async function () {
 			try {
-				const db = new PouchDB(LOCAL_DB_NAME);
+				const db = DatabaseService.getDB();
 
 				await db.createIndex({
 					index: {
@@ -222,7 +223,7 @@ sap.ui.define([
 		},
 
 		_saveODataToPouchDB: async function (entityName, data) {
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 
 			const docs = data.map(item => {
 				const clean = this._cleanODataItem(item);
@@ -301,13 +302,13 @@ sap.ui.define([
 				this.getView().getModel("home").setProperty("/user/FullName", oUserCard.FullName);
 			} else {
 				console.warn("UserCard not found in PouchDB");
-				this.getView().getModel("home").setProperty("/user/FullName", "Não Sincronizado");
+				this.getView().getModel("home").setProperty("/user/FullName", this.getResourceBundle().getText("NotSynchronized"));
 			}
 		},
 
 		_readUserCardFromPouch: async function () {
 			try {
-				const db = new PouchDB(LOCAL_DB_NAME);
+				const db = DatabaseService.getDB();
 				const result = await db.allDocs({ include_docs: true });
 
 				const aUserCardDocs = result.rows
@@ -330,7 +331,7 @@ sap.ui.define([
 				const oUserCardData = this.getView().getModel("userCardModel").getData();
 
 				if (!oUserCardData || !oUserCardData.FullName) {
-					MessageToast.show("Dados do Cartão de Usuário não disponíveis. Por favor, Sincronize o App.");
+					MessageToast.show(this.getResourceBundle().getText("UserCardDataUnavailable"));
 					return;
 				}
 
@@ -582,14 +583,14 @@ sap.ui.define([
 
 		formatDateTime: function (oDate) {
 			if (!oDate || !(oDate instanceof Date)) {
-				return "Nunca Sincronizado";
+				return this.getResourceBundle().getText("NeverSynchronized");
 			}
 
 			const oDateFormat = DateFormat.getDateTimeInstance({
 				pattern: "dd/MM/yyyy HH:mm:ss"
 			});
 
-			return oDateFormat.format(oDate);
+			return Formatters.formatDateTime(oDate);
 		}
 	});
 });

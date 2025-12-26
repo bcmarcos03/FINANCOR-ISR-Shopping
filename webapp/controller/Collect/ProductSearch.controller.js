@@ -1,12 +1,11 @@
 sap.ui.define([
 	"com/financor/sd/shoppingapp/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
-	"sap/m/MessageToast"
-], function (BaseController, JSONModel, MessageToast) {
+	"sap/m/MessageToast",
+	"com/financor/sd/shoppingapp/utils/Constants",
+	"com/financor/sd/shoppingapp/services/DatabaseService"
+], function (BaseController, JSONModel, MessageToast, Constants, DatabaseService) {
 	"use strict";
-
-	const LOCAL_DB_NAME = "financorDB";
-	const ENTITY_NAME = "Products";
 
 	return BaseController.extend("com.financor.sd.shoppingapp.controller.Collect.ProductSearch", {
 
@@ -58,7 +57,7 @@ sap.ui.define([
 		},
 
 		_ensureIndexes: async function () {
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 			try {
 				// Create composite index for fast filtering
 				await db.createIndex({
@@ -110,7 +109,7 @@ sap.ui.define([
 			const sQuery = oViewModel.getProperty("/searchQuery").trim();
 
 			if (!sQuery) {
-				MessageToast.show("Por favor, insira um termo de pesquisa.");
+				MessageToast.show(this.getResourceBundle().getText("ValidationEnterSearchTerm"));
 				return;
 			}
 
@@ -130,21 +129,21 @@ sap.ui.define([
 				oViewModel.setProperty("/resultCount", aResults.length);
 
 				if (aResults.length === 0) {
-					MessageToast.show("Nenhum produto encontrado.");
+					MessageToast.show(this.getResourceBundle().getText("NoProductsFound"));
 				} else {
-					MessageToast.show(`${aResults.length} produto(s) encontrado(s).`);
+					MessageToast.show(this.getResourceBundle().getText("ProductsFoundCount", [aResults.length]));
 				}
 
 			} catch (error) {
 				console.error("Search error:", error);
-				MessageToast.show("Erro ao pesquisar produtos.");
+				MessageToast.show(this.getResourceBundle().getText("ProductSearchError"));
 			} finally {
 				this.getView().setBusy(false);
 			}
 		},
 
 		_searchProducts: async function (sQuery, sCompetitorKey, sAssortmentKey) {
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 
 			try {
 				// Convert query to lowercase for case-insensitive search
@@ -153,7 +152,7 @@ sap.ui.define([
 				// First, get all products for this competitor
 				const result = await db.find({
 					selector: {
-						entityName: ENTITY_NAME,
+						entityName: Constants.ENTITY_NAMES.PRODUCTS,
 						Customer: sCompetitorKey,
 						Assortment: sAssortmentKey
 					}
