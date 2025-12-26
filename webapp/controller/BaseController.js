@@ -5,11 +5,12 @@ sap.ui.define([
 	"sap/ui/core/Fragment",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
-	"sap/m/MessageToast"],
-	function (Controller, UIComponent, History, Fragment, JSONModel, MessageBox, MessageToast) {
+	"sap/m/MessageToast",
+	"com/financor/sd/shoppingapp/utils/Constants",
+	"com/financor/sd/shoppingapp/services/DatabaseService",
+	"com/financor/sd/shoppingapp/services/HierarchyService"],
+	function (Controller, UIComponent, History, Fragment, JSONModel, MessageBox, MessageToast, Constants, DatabaseService, HierarchyService) {
 	"use strict";
-
-	const LOCAL_DB_NAME = "financorDB";
 
 	return Controller.extend("com.financor.sd.shoppingapp.controller.BaseController", {
 		/**
@@ -70,11 +71,11 @@ sap.ui.define([
 			if (sPreviousHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				this.getRouter().navTo("main", {}, undefined, true);
+				this.getRouter().navTo(Constants.ROUTES.MAIN, {}, undefined, true);
 			}
 		},
 		onNavToHome: function() {
-			this.getRouter().navTo("main", {}, true);
+			this.getRouter().navTo(Constants.ROUTES.MAIN, {}, true);
 		},
 
 		// ============================================================
@@ -110,8 +111,8 @@ sap.ui.define([
 		_updateFABVisibility: function() {
 			const oContext = this._getCurrentNavigationContext();
 			const bVisible = oContext &&
-							 oContext.routeName !== "main" &&
-							 oContext.routeName !== "competitors";
+							 oContext.routeName !== Constants.ROUTES.MAIN &&
+							 oContext.routeName !== Constants.ROUTES.COMPETITORS;
 
 			const oFabModel = this.getView().getModel("fab");
 			if (oFabModel) {
@@ -169,7 +170,7 @@ sap.ui.define([
 				const oContext = this._getCurrentNavigationContext();
 
 				if (!oContext) {
-					MessageBox.error("Contexto de navegação não encontrado");
+					MessageBox.error(this.getResourceBundle().getText("NavigationContextNotFound"));
 					return;
 				}
 
@@ -222,7 +223,7 @@ sap.ui.define([
 					} else {
 						// Quagga not loaded - show message but allow manual entry
 						const oScannerModel = this.getView().getModel("scannerModel");
-						oScannerModel.setProperty("/statusText", "Câmara não disponível. Use entrada manual abaixo.");
+						oScannerModel.setProperty("/statusText", this.getResourceBundle().getText("CameraUnavailableManualEntry"));
 					}
 				});
 			}
@@ -341,7 +342,7 @@ sap.ui.define([
 				const oContext = this._getCurrentNavigationContext();
 
 				if (!oContext) {
-					MessageBox.error("Contexto de navegação não encontrado");
+					MessageBox.error(this.getResourceBundle().getText("NavigationContextNotFound"));
 					this._closeBarcodeScanner();
 					return;
 				}
@@ -374,7 +375,7 @@ sap.ui.define([
 
 			} catch (error) {
 				console.error("Barcode processing error:", error);
-				MessageBox.error("Erro ao processar código: " + error.message);
+				MessageBox.error(this.getResourceBundle().getText("ProcessBarcodeErrorPrefix", [error.message]));
 			} finally {
 				this.getView().setBusy(false);
 			}
@@ -389,12 +390,12 @@ sap.ui.define([
 		 * @returns {Promise<object|null>} Product document or null
 		 */
 		_lookupProductByEAN: async function(sEAN, sCompetitorKey, sAssortmentKey) {
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 
 			try {
 				const result = await db.find({
 					selector: {
-						entityName: "Products",
+						entityName: Constants.ENTITY_NAMES.PRODUCTS,
 						Customer: sCompetitorKey,
 						Assortment: sAssortmentKey,
 						EAN: sEAN
@@ -424,18 +425,18 @@ sap.ui.define([
 		 */
 		_createNewProductDocument: async function(sEAN, oContext, sCreatedBy = "") {
 			const MAX_RETRIES = 3;
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 
 			// Only use hierarchy context if scanning from hierarchy navigation pages
 			const bUseHierarchyContext = oContext.routeName &&
 				["AreaList", "DivisionList", "FamilyList", "CategoryList", "ProductGroupList", "ProductList"]
 				.includes(oContext.routeName);
 
-			const sArea = bUseHierarchyContext && oContext.areaKey ? oContext.areaKey : "UNKNOWN_AREA";
-			const sDivision = bUseHierarchyContext && oContext.divisionKey ? oContext.divisionKey : "UNKNOWN_DIVISION";
-			const sFamily = bUseHierarchyContext && oContext.familyKey ? oContext.familyKey : "UNKNOWN_FAMILY";
-			const sCategory = bUseHierarchyContext && oContext.categoryKey ? oContext.categoryKey : "UNKNOWN_CATEGORY";
-			const sProductGroup = bUseHierarchyContext && oContext.productGroupKey ? oContext.productGroupKey : "UNKNOWN_GROUP";
+			const sArea = bUseHierarchyContext && oContext.areaKey ? oContext.areaKey : "Constants.UNKNOWN_VALUES.AREA";
+			const sDivision = bUseHierarchyContext && oContext.divisionKey ? oContext.divisionKey : "Constants.UNKNOWN_VALUES.DIVISION";
+			const sFamily = bUseHierarchyContext && oContext.familyKey ? oContext.familyKey : "Constants.UNKNOWN_VALUES.FAMILY";
+			const sCategory = bUseHierarchyContext && oContext.categoryKey ? oContext.categoryKey : "Constants.UNKNOWN_VALUES.CATEGORY";
+			const sProductGroup = bUseHierarchyContext && oContext.productGroupKey ? oContext.productGroupKey : "Constants.UNKNOWN_VALUES.GROUP";
 
 			// If using hierarchy context, fetch the text descriptions from PouchDB
 			let oHierarchyTexts = {};
@@ -475,7 +476,7 @@ sap.ui.define([
 						// Document doesn't exist - create it
 						const oNewProduct = {
 							_id: sSyncKey,
-							entityName: "Products",
+							entityName: Constants.ENTITY_NAMES.PRODUCTS,
 							SyncKey: sSyncKey,
 							Product: sProductCode,
 							EAN: sEAN,
@@ -499,7 +500,7 @@ sap.ui.define([
 							ProductGroupText: oHierarchyTexts.ProductGroupText || "",
 
 							// Default values
-							MaterialDescription: sEAN ? `SCAN - EAN: ${sEAN}` : "NOVO PRODUTO",
+							MaterialDescription: sEAN ? this.getResourceBundle().getText("ScanProductDescription", [sEAN]) : this.getResourceBundle().getText("NewProductLabel"),
 							Brand: "",
 							Currency: oCompetitorData.Currency,
 
@@ -553,7 +554,7 @@ sap.ui.define([
 		 * @returns {Promise<object>} Competitor shop data
 		 */
 		_fetchCompetitorShopData: async function(sCompetitorKey, sAssortmentKey) {
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 
 			try {
 				const result = await db.find({
@@ -599,7 +600,7 @@ sap.ui.define([
 		 * @returns {Promise<object>} Hierarchy text descriptions
 		 */
 		_fetchHierarchyTexts: async function(oContext) {
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 			const oTexts = {};
 
 			try {
@@ -836,7 +837,7 @@ sap.ui.define([
 		 * @param {object} oContext Navigation context
 		 */
 		_loadHierarchyOptions: async function(oContext) {
-			const db = new PouchDB(LOCAL_DB_NAME);
+			const db = DatabaseService.getDB();
 			const oHierarchyModel = this.getView().getModel("hierarchyModel");
 			const oMissing = this._checkMissingHierarchy(oContext);
 
@@ -1011,7 +1012,7 @@ sap.ui.define([
 
 			// Reload Divisions filtered by new Area
 			if (oHierarchyModel.getProperty("/needsDivision")) {
-				const db = new PouchDB(LOCAL_DB_NAME);
+				const db = DatabaseService.getDB();
 				try {
 					const divisionResult = await db.find({
 						selector: {
@@ -1052,7 +1053,7 @@ sap.ui.define([
 
 			// Reload Families filtered by new Division
 			if (oHierarchyModel.getProperty("/needsFamily")) {
-				const db = new PouchDB(LOCAL_DB_NAME);
+				const db = DatabaseService.getDB();
 				try {
 					const familyResult = await db.find({
 						selector: {
@@ -1091,7 +1092,7 @@ sap.ui.define([
 
 			// Reload Categories filtered by new Family
 			if (oHierarchyModel.getProperty("/needsCategory")) {
-				const db = new PouchDB(LOCAL_DB_NAME);
+				const db = DatabaseService.getDB();
 				try {
 					const categoryResult = await db.find({
 						selector: {
@@ -1128,7 +1129,7 @@ sap.ui.define([
 
 			// Reload ProductGroups filtered by new Category
 			if (oHierarchyModel.getProperty("/needsProductGroup")) {
-				const db = new PouchDB(LOCAL_DB_NAME);
+				const db = DatabaseService.getDB();
 				try {
 					const productGroupResult = await db.find({
 						selector: {
