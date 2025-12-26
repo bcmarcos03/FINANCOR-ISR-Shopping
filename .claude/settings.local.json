@@ -9,7 +9,8 @@
       "Bash(for:*)",
       "Bash(do tail -5 \"$file\")",
       "Bash(done)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(node -c:*)"
     ]
   }
 }
