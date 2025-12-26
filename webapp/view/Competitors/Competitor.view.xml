@@ -18,20 +18,22 @@
             <f:GridList
                 id="competitorGridList"
                 items="{
-                    path: 'listModel>/CompetitorLists', 
+                    path: 'listModel>/CompetitorLists',
                     sorter: {
                         path: 'Assortment',
                         descending: false,
                         group: true
                     }
-                }"                
+                }"
                 growing="true"
                 growingThreshold="10"
                 noDataText="Nenhum concorrente encontrado. Verifique a sincronização."
+                class="competitorGridList"
             >
                 <f:customLayout>
                     <grid:GridBoxLayout
-                        boxMinWidth="20rem"
+                        boxMinWidth="16rem"
+                        boxWidth="16rem"
                     />
                 </f:customLayout>
 

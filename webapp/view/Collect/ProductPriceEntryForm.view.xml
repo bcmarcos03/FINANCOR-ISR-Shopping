@@ -67,6 +67,65 @@
                             placeholder="{i18n>EANLabel}"
                         />
 
+                        <Label text="{i18n>AreaLabel}" required="true" />
+                        <ComboBox
+                            id="selectArea"
+                            selectedKey="{formModel>/areaKey}"
+                            items="{formModel>/areas}"
+                            placeholder="{i18n>SelectArea}"
+                            selectionChange=".onAreaChange">
+                            <core:Item
+                                key="{formModel>Area}"
+                                text="{formModel>Area} - {formModel>AreaText}" />
+                        </ComboBox>
+
+                        <Label text="{i18n>DivisionLabel}" required="true" />
+                        <ComboBox
+                            id="selectDivision"
+                            selectedKey="{formModel>/divisionKey}"
+                            items="{formModel>/divisions}"
+                            placeholder="{i18n>SelectDivision}"
+                            selectionChange=".onDivisionChange">
+                            <core:Item
+                                key="{formModel>Division}"
+                                text="{formModel>Division} - {formModel>DivisionText}" />
+                        </ComboBox>
+
+                        <Label text="{i18n>FamilyLabel}" required="true" />
+                        <ComboBox
+                            id="selectFamily"
+                            selectedKey="{formModel>/familyKey}"
+                            items="{formModel>/families}"
+                            placeholder="{i18n>SelectFamily}"
+                            selectionChange=".onFamilyChange">
+                            <core:Item
+                                key="{formModel>Family}"
+                                text="{formModel>Family} - {formModel>FamilyText}" />
+                        </ComboBox>
+
+                        <Label text="{i18n>CategoryLabel}" required="true" />
+                        <ComboBox
+                            id="selectCategory"
+                            selectedKey="{formModel>/categoryKey}"
+                            items="{formModel>/categories}"
+                            placeholder="{i18n>SelectCategory}"
+                            selectionChange=".onCategoryChange">
+                            <core:Item
+                                key="{formModel>Category}"
+                                text="{formModel>Category} - {formModel>CategoryText}" />
+                        </ComboBox>
+
+                        <Label text="{i18n>ProductGroupLabel}" required="true" />
+                        <ComboBox
+                            id="selectProductGroup"
+                            selectedKey="{formModel>/productGroupKey}"
+                            items="{formModel>/productGroups}"
+                            placeholder="{i18n>SelectProductGroup}">
+                            <core:Item
+                                key="{formModel>ProductGroup}"
+                                text="{formModel>ProductGroup} - {formModel>ProductGroupText}" />
+                        </ComboBox>
+
                         <Label text="{i18n>BrandLabel}" />
                         <Select
                             id="selectBrand"

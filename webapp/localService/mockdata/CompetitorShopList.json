@@ -7,7 +7,8 @@
     "City": "Lisboa",
     "Street": "Rua das Flores, 123",
     "PostalCode": "1000-001",
-    "Country": "PT"
+    "Country": "PT",
+    "Currency": "EUR"
   },
   {
     "SyncKey": "CompetitorShopList_001_COMP002",
@@ -17,7 +18,8 @@
     "City": "Porto",
     "Street": "Av. da Liberdade, 456",
     "PostalCode": "4000-001",
-    "Country": "PT"
+    "Country": "PT",
+    "Currency": "EUR"
   },
   {
     "SyncKey": "CompetitorShopList_001_COMP003",
@@ -27,6 +29,7 @@
     "City": "Braga",
     "Street": "Praça do Comércio, 789",
     "PostalCode": "4700-001",
-    "Country": "PT"
+    "Country": "PT",
+    "Currency": "EUR"
   }
 ]

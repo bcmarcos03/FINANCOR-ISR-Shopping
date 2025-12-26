@@ -28,6 +28,12 @@
                 </contentMiddle>
                 <contentRight>
                     <Button
+                        id="createProductButtonProductSearch"
+                        icon="sap-icon://add-product"
+                        press=".onCreateProductPress"
+                        tooltip="{i18n>CreateProductTooltip}"
+                        type="Transparent" />                    
+                    <Button
                         id="btnToggleManualMode"
                         icon="sap-icon://grid"
                         tooltip="{i18n>ManualNavigationTooltip}"
@@ -45,10 +51,17 @@
                     width="100%"
                     search=".onSearch"
                     value="{viewModel>/searchQuery}" />
-                <Button
+
+                    <Button
+                        id="barcodeScanButtonProductSearch"
+                        icon="sap-icon://bar-code"
+                        press=".onBarcodeScanPress"
+                        tooltip="{i18n>BarcodeScanTooltip}"
+                        type="Emphasized" />
+                <!-- <Button
                     icon="sap-icon://search"
                     press=".onSearch"
-                    type="Emphasized" />
+                    type="Emphasized" /> -->
             </Toolbar>
         </subHeader>
 
@@ -76,7 +89,8 @@
                     text="{i18n>UseManualNavigation}"
                     icon="sap-icon://grid"
                     press=".onToggleManualMode"
-                    class="sapUiMediumMarginTop" />
+                    class="sapUiMediumMarginTop" />                    
+
             </VBox>
 
             <!-- Empty State: No Results -->
@@ -147,5 +161,9 @@
                 <Label text="{i18n>ResultsCount}: {viewModel>/resultCount}" />
             </Toolbar>
         </footer>
+
+        <dependents>
+            <core:Fragment fragmentName="com.financor.sd.shoppingapp.view.fragments.BarcodeScanner" type="XML"/>
+        </dependents>
     </Page>
 </mvc:View>

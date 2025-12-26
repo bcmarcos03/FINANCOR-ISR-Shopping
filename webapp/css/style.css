@@ -1,1 +1,139 @@
 /* Enter your custom styles here */
+
+/* ============================================================ */
+/* BARCODE SCANNER - FLOATING ACTION BUTTON                     */
+/* ============================================================ */
+
+/* FAB container positioning */
+.barcodeFABContainer {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* FAB button styling */
+.barcodeFABButton {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ============================================================ */
+/* BARCODE SCANNER - CAMERA PREVIEW                             */
+/* ============================================================ */
+
+/* Camera preview container */
+.cameraPreviewContainer {
+    width: 100%;
+    max-width: 640px;
+    height: 480px;
+    background-color: #000;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    display: block;
+}
+
+/* QuaggaJS canvas overlay */
+.cameraPreviewContainer canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* QuaggaJS video element */
+.cameraPreviewContainer video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Scanner status text */
+.scannerStatusText {
+    text-align: center;
+    font-size: 1rem;
+    padding: 8px;
+}
+
+/* Scanner dialog content */
+.barcodeScannerContent {
+    padding: 0 !important;
+}
+
+/* Manual EAN input section */
+.manualEANSection {
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ccc;
+}
+
+/* ============================================================ */
+/* MAIN PAGE - MOBILE OPTIMIZED TILES                           */
+/* ============================================================ */
+
+/* Container for main page tiles */
+.mainTilesContainer {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Individual tile sizing for mobile optimization */
+.mainPageTile {
+    width: 100% !important;
+    max-width: 320px !important;
+    min-width: 320px !important;
+    box-sizing: border-box !important;
+}
+
+/* Force consistent height for all tiles */
+.mainPageTile .sapMGT {
+    min-height: 320px !important;
+}
+
+/* Ensure tiles don't overflow on small screens */
+@media (max-width: 360px) {
+    .mainPageTile {
+        max-width: 280px !important;
+        min-width: 280px !important;
+    }
+
+    .mainPageTile .sapMGT {
+        min-height: 280px !important;
+    }
+}
+
+/* ============================================================ */
+/* COMPETITOR VIEW - MOBILE OPTIMIZED GRID                      */
+/* ============================================================ */
+
+/* Competitor grid list - responsive layout */
+.competitorGridList .sapFGridList {
+    padding: 0.5rem !important;
+}
+
+/* Grid items should fit mobile screens */
+.competitorGridList .sapFGridListItem {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure grid respects viewport width on mobile */
+.competitorGridList .sapUiRespGrid {
+    max-width: 100% !important;
+}
+
+/* Mobile optimization - single column layout */
+@media (max-width: 640px) {
+    .competitorGridList .sapFGridListDefault {
+        grid-template-columns: 1fr !important;
+    }
+
+    .competitorGridList .sapFGridListItem {
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+}

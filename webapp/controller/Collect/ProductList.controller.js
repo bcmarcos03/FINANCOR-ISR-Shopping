@@ -9,10 +9,13 @@ sap.ui.define([
     return BaseListController.extend("com.financor.sd.shoppingapp.controller.Collect.ProductList", {
 
         onInit: function () {
-            this.getView().setModel(new JSONModel({ 
+            // Call parent onInit (required for BaseListController initialization)
+            BaseListController.prototype.onInit.apply(this, arguments);
+
+            this.getView().setModel(new JSONModel({
                 competitorName: ""
             }), "viewModel");
-            
+
             this.getOwnerComponent().getRouter().getRoute("ProductList").attachPatternMatched(this._onRouteMatched, this);
         },
 

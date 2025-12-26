@@ -31,6 +31,18 @@
                     <Title text="{i18n>FamilyTitle}" />
                 </contentMiddle>
                 <contentRight>
+                    <Button
+                        id="createProductButtonFamilyList"
+                        icon="sap-icon://add-product"
+                        press=".onCreateProductPress"
+                        tooltip="{i18n>CreateProductTooltip}"
+                        type="Transparent" />
+                    <Button
+                        id="barcodeScanButtonFamilyList"
+                        icon="sap-icon://bar-code"
+                        press=".onBarcodeScanPress"
+                        tooltip="{i18n>BarcodeScanTooltip}"
+                        type="Emphasized" />
                 </contentRight>
             </Bar>
         </customHeader>
@@ -51,5 +63,9 @@
                 />
             </List>
         </content>
+
+        <dependents>
+            <core:Fragment fragmentName="com.financor.sd.shoppingapp.view.fragments.BarcodeScanner" type="XML"/>
+        </dependents>
     </Page>
 </mvc:View>

@@ -24,6 +24,9 @@ sap.ui.define([
 			// Initialize list model
 			this.getView().setModel(new JSONModel({ ListData: [] }), "listModel");
 
+			// Initialize barcode FAB
+			this.initBarcodeFAB();
+
 			// Attach route handler
 			this.getOwnerComponent().getRouter()
 				.getRoute("ProductSearch")
@@ -61,6 +64,13 @@ sap.ui.define([
 				await db.createIndex({
 					index: {
 						fields: ['entityName', 'Customer', 'Assortment']
+					}
+				});
+
+				// Create composite index for barcode scanning EAN lookup
+				await db.createIndex({
+					index: {
+						fields: ['entityName', 'Customer', 'Assortment', 'EAN']
 					}
 				});
 
@@ -171,8 +181,6 @@ sap.ui.define([
 		},
 
 		onProductSelect: function (oEvent) {
-
-			 console.log("Marcos");
 
 			const oContext = oEvent.getSource().getBindingContext("listModel");
 			if (!oContext) {

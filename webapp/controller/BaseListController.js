@@ -11,6 +11,11 @@ sap.ui.define([
 
     return BaseController.extend("com.financor.sd.shoppingapp.controller.BaseListController", {
 
+        onInit: function () {
+            // Initialize barcode FAB for all hierarchy controllers
+            this.initBarcodeFAB();
+        },
+
         onNavBack: function () {
            const oHistory = History.getInstance();
            const sPreviousHash = oHistory.getPreviousHash();             

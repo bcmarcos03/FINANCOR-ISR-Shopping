@@ -381,21 +381,23 @@ sap.ui.define([
 		_prepareCollectedPricePayload: function (product) {
 			// Prepare payload for CollectedPrices entity
 			return {
-				// Product identification fields
-				SyncKey: product.SyncKey,
-				Product: product.Product,
-				MaterialName: product.MaterialDescription,
-				EAN: product.EAN,
-				Brand: product.Brand,
+				// Product identification fields - ensure strings
+				SyncKey: String(product.SyncKey || ""),
+				Product: product.IsNewProduct ? "" : String(product.Product || ""),
+				MaterialName: String(product.MaterialDescription || ""),
+				EAN: String(product.EAN || ""),
+				Brand: String(product.Brand || ""),
 
-				// Hierarchical classification (for reference)
-				Customer: product.Customer,
-				Assortment: product.Assortment,
-				Area: product.Area,
-				Division: product.Division,
-				Family: product.Family,
-				Category: product.Category,
-				ProductGroup: product.ProductGroup,
+				// Hierarchical classification (for reference) - ensure strings
+				Customer: this._formatCustomerNumber(product.Customer),
+				Assortment: String(product.Assortment || ""),
+				SalesOrganization: String(product.SalesOrganization || ""),
+				DistributionChannel: String(product.DistributionChannel || ""),
+				Area: String(product.Area || ""),
+				Division: String(product.Division || ""),
+				Family: String(product.Family || ""),
+				Category: String(product.Category || ""),
+				ProductGroup: String(product.ProductGroup || ""),
 
 				// Collected price data
 				NormalPrice: product.NormalPrice ? parseFloat(product.NormalPrice).toFixed(2) : "0.00",
@@ -406,10 +408,27 @@ sap.ui.define([
 				Observations: product.Observations || "",
 				LiquidContent: product.LiquidContent || "",
 				LiquidUnit: product.LiquidContentUnit || "L",
+				Currency: String(product.Currency || "EUR"),
 				CollectedDate: this._toSapDate(product.CollectedDate),
-			CollectedTime: this._toSapTime(product.CollectedDate),
-			LastChangedAt: product.CollectedDate ? new Date(product.CollectedDate) : new Date()
+				CollectedTime: this._toSapTime(product.CollectedDate),
+				LastChangedAt: product.CollectedDate ? new Date(product.CollectedDate) : new Date()
 			};
+		},
+
+		_formatMaterialNumber: function (material) {
+			// Format material number with leading zeros (SAP MATNR format - 18 chars)
+			if (!material) return "";
+			const sMaterial = String(material).trim();
+			// Pad with leading zeros to 18 characters
+			return sMaterial.padStart(18, "0");
+		},
+
+		_formatCustomerNumber: function (customer) {
+			// Format customer number with leading zeros (SAP KUNNR format - 10 chars)
+			if (!customer) return "";
+			const sCustomer = String(customer).trim();
+			// Pad with leading zeros to 10 characters
+			return sCustomer.padStart(10, "0");
 		},
 
 		_savePouchDBToOdata: function (oModel, productsArray) {

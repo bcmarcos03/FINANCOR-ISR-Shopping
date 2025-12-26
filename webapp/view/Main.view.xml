@@ -27,21 +27,21 @@
         </customHeader>
 
         <content>
-            
+
             <FlexBox
                 direction="Column"
-                alignItems="Stretch"
+                alignItems="Center"
                 justifyContent="Center"
-                class="sapUiContentPadding sapUiMediumMarginTop"
+                class="sapUiContentPadding sapUiMediumMarginTop mainTilesContainer"
             >
                 <!-- Tile 1: Iniciar Shopping -->
                 <GenericTile
                     id="tileShopping"
-                    class="sapUiSmallMarginBottom"
+                    class="sapUiSmallMarginBottom mainPageTile"
                     header="{i18n>OptionInit}"
                     subheader="{i18n>OptionInitSub}"
                     press=".onPressShopping"
-                    frameType="TwoByHalf"
+                    frameType="OneByOne"
                 >
                     <TileContent>
                         <ImageContent src="sap-icon://cart-3" />
@@ -51,11 +51,11 @@
                 <!-- Tile 2: Preços Recolhidos -->
                 <GenericTile
                     id="tileCollectedPrices"
-                    class="sapUiSmallMarginBottom"
+                    class="sapUiSmallMarginBottom mainPageTile"
                     header="{i18n>OptionCollectedPrices}"
                     subheader="{i18n>OptionCollectedPricesSub}"
                     press=".onPressCollectedPrices"
-                    frameType="TwoByHalf"
+                    frameType="OneByOne"
                 >
                     <TileContent>
 
@@ -71,11 +71,11 @@
                 <!-- Tile 3: Sincronizar Dados -->
                 <GenericTile
                     id="tileSync"
-                    class="sapUiSmallMarginBottom"
+                    class="sapUiSmallMarginBottom mainPageTile"
                     header="{i18n>OptionSync}"
                     subheader="{i18n>OptionSyncSub}"
                     press=".onPressSync"
-                    frameType="TwoByHalf"
+                    frameType="OneByOne"
                 >
 
                     <TileContent footer="{i18n>OptionSyncFooter}">
@@ -84,7 +84,7 @@
                     </TileContent>
                 </GenericTile>
             </FlexBox>
-            
+
         </content>
 
         <footer>

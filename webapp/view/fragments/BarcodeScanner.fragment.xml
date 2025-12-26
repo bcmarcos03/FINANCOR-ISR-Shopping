@@ -1,0 +1,70 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="barcodeScannerDialog"
+        stretch="true"
+        class="barcodeScannerDialog">
+
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button
+                        icon="sap-icon://decline"
+                        press=".onCloseBarcodeScanner"
+                        tooltip="{i18n>CloseScanner}" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>BarcodeScanTitle}" level="H2" />
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <l:VerticalLayout width="100%" class="sapUiContentPadding">
+
+                <!-- Camera Preview Container -->
+                <core:HTML
+                    id="cameraPreview"
+                    content='&lt;div class="cameraPreviewContainer"&gt;&lt;/div&gt;' />
+
+                <!-- Status Section -->
+                <VBox alignItems="Center" class="sapUiMediumMarginTop">
+                    <BusyIndicator
+                        visible="{scannerModel>/isScanning}"
+                        size="2rem"
+                        class="sapUiSmallMarginBottom" />
+
+                    <Text
+                        text="{scannerModel>/statusText}"
+                        class="sapUiTinyMarginBottom"
+                        textAlign="Center" />
+                </VBox>
+
+                <!-- Manual Entry Fallback -->
+                <VBox alignItems="Center" class="sapUiLargeMarginTop">
+                    <Label
+                        text="{i18n>ManualEANEntry}"
+                        class="sapUiTinyMarginBottom" />
+
+                    <Input
+                        id="manualEANInput"
+                        value="{scannerModel>/manualEAN}"
+                        placeholder="{i18n>ManualEANPlaceholder}"
+                        maxLength="13"
+                        width="200px"
+                        type="Number"
+                        class="sapUiSmallMarginBottom" />
+
+                    <Button
+                        text="{i18n>ConfirmManualEAN}"
+                        press=".onManualEANSubmit"
+                        type="Emphasized" />
+                </VBox>
+
+            </l:VerticalLayout>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

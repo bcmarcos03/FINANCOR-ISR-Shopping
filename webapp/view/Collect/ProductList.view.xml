@@ -31,7 +31,21 @@
                 <contentMiddle>
                     <Title text="{i18n>ProductTitle}" />
                 </contentMiddle>
-                <contentRight />
+                <contentRight>
+                    <Button
+                        id="createProductButton"
+                        icon="sap-icon://add-product"
+                        press=".onCreateProductPress"
+                        tooltip="{i18n>CreateProductTooltip}"
+                        type="Transparent" />
+                    <Button
+                        id="barcodeScanButton"
+                        icon="sap-icon://bar-code"
+                        text="Scan"
+                        press=".onBarcodeScanPress"
+                        tooltip="{i18n>BarcodeScanTooltip}"
+                        type="Emphasized" />
+                </contentRight>
             </Bar>
         </customHeader>
         <content>
@@ -70,5 +84,9 @@
                 </ColumnListItem>
             </Table>
         </content>
+
+        <dependents>
+            <core:Fragment fragmentName="com.financor.sd.shoppingapp.view.fragments.BarcodeScanner" type="XML"/>
+        </dependents>
     </Page>
 </mvc:View>

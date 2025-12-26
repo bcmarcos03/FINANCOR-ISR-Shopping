@@ -1,0 +1,13 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Button
+        id="barcodeFAB"
+        icon="sap-icon://bar-code"
+        type="Emphasized"
+        press=".onBarcodeScanPress"
+        visible="true"
+        tooltip="{i18n>BarcodeScanTooltip}"
+        class="barcodeFABContainer barcodeFABButton" />
+</core:FragmentDefinition>
