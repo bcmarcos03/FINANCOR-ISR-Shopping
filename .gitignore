@@ -11,3 +11,5 @@ archive.zip
 TECHNICAL_DOCUMENTATION.md
 USER_GUIDE.md
 .claude/settings.local.json
+.claude/settings.json
+.claude/
