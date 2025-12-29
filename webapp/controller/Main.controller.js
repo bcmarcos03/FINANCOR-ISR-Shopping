@@ -103,6 +103,33 @@ sap.ui.define([
 
 					if (productsToUpdate.docs.length > 0) {
 						try {
+						// Validate products before sync
+						const validation = this._validateProductsForSync(productsToUpdate.docs);
+
+						if (!validation.isValid) {
+							console.error("Validation errors:", validation.errors);
+
+							const sErrorMessage = "Alguns produtos têm dados em falta:\n\n" +
+								validation.errors.slice(0, 5).join("\n") +
+								(validation.errors.length > 5 ? `\n... e mais ${validation.errors.length - 5} erros` : "") +
+								"\n\nTente sincronizar novamente os dados mestres.";
+
+							MessageBox.error(sErrorMessage, {
+								title: "Erro de Sincronização"
+							});
+
+							this.getView().setBusy(false);
+							return;
+						}
+
+						// Ensure OData metadata is loaded before creating entries
+						await new Promise((resolve, reject) => {
+							oModel.metadataLoaded().then(() => {
+								console.log("[SYNC] OData metadata loaded successfully");
+								resolve();
+							}).catch(reject);
+						});
+
 						// Show progress to user
 						MessageToast.show(this.getResourceBundle().getText("SendingPricesMessage", [productsToUpdate.docs.length]));
 
@@ -234,7 +261,33 @@ sap.ui.define([
 			}
 		},
 
-		_readODataSet: function (oModel, sPath) {
+		_validateProductsForSync: function(aProducts) {
+		const aErrors = [];
+
+		aProducts.forEach((product, index) => {
+			const sProductId = product.MaterialDescription || product.SyncKey || `Product ${index + 1}`;
+
+			if (!product.SalesOrganization || product.SalesOrganization === "") {
+				aErrors.push(`${sProductId}: Missing SalesOrganization`);
+			}
+			if (!product.DistributionChannel || product.DistributionChannel === "") {
+				aErrors.push(`${sProductId}: Missing DistributionChannel`);
+			}
+			if (!product.Customer) {
+				aErrors.push(`${sProductId}: Missing Customer`);
+			}
+			if (!product.Assortment) {
+				aErrors.push(`${sProductId}: Missing Assortment`);
+			}
+		});
+
+		return {
+			isValid: aErrors.length === 0,
+			errors: aErrors
+		};
+	},
+
+	_readODataSet: function (oModel, sPath) {
 			return new Promise((resolve, reject) => {
 				oModel.read(sPath, {
 					success: (oData) => resolve(oData.results || oData),

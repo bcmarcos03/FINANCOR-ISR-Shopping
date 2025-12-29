@@ -11,7 +11,20 @@
       "Bash(done)",
       "Bash(cat:*)",
       "Bash(node -c:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(node insert-validation.js:*)",
+      "Bash(powershell:*)",
+      "Bash(dir /r)",
+      "Bash(test:*)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File remove-ads.ps1)",
+      "Bash(npm run build:*)",
+      "Bash(powershell.exe -Command \"Get-ChildItem -Path ''c:\\\\VSCode\\\\personal\\\\FINANCOR-ISR-shopping\\\\dist'' -Recurse -File | Get-Item -Stream * -ErrorAction SilentlyContinue | Where-Object { $_Stream -ne '':$DATA'' } | Select-Object -First 10\")",
+      "Bash(ls:*)",
+      "Bash(npm run deploy:*)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File cleanup-dist-ads.ps1)",
+      "Bash(npx fiori deploy:*)",
+      "Bash(powershell.exe -Command \"Get-ChildItem . -Filter ''*:*'' | Remove-Item -Force; Get-ChildItem -Recurse -File | ForEach-Object { Get-Item $_.FullName -Stream * | Where-Object { $_.Stream -ne '':DATA'' } | ForEach-Object { Remove-Item $_.PSPath } }\")",
+      "Bash(git checkout:*)"
     ]
   }
 }

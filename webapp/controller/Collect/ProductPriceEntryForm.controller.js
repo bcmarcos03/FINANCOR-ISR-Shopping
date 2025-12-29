@@ -500,6 +500,34 @@ sap.ui.define([
                 throw new Error("Produto original não encontrado");
             }
 
+            // CRITICAL FIX: Ensure SalesOrganization and DistributionChannel are present
+            if (!oOriginalProduct.SalesOrganization || !oOriginalProduct.DistributionChannel) {
+                console.warn("Missing SalesOrg/DistChannel, fetching from CompetitorShopList");
+
+                try {
+                    const competitorResult = await db.find({
+                        selector: {
+                            entityName: "CompetitorShopList",
+                            Customer: oFormData.competitorKey,
+                            Assortment: oFormData.assortmentKey
+                        },
+                        limit: 1
+                    });
+
+                    if (competitorResult.docs.length > 0) {
+                        const oCompetitor = competitorResult.docs[0];
+                        oOriginalProduct.SalesOrganization = oCompetitor.SalesOrganization || "";
+                        oOriginalProduct.DistributionChannel = oCompetitor.DistributionChannel || "";
+                        oOriginalProduct.Currency = oCompetitor.Currency || "EUR";
+                        console.log("Fetched SalesOrg:", oOriginalProduct.SalesOrganization, "DistChannel:", oOriginalProduct.DistributionChannel);
+                    } else {
+                        console.error("CompetitorShopList not found for Customer:", oFormData.competitorKey, "Assortment:", oFormData.assortmentKey);
+                    }
+                } catch (error) {
+                    console.error("Error fetching competitor data:", error);
+                }
+            }
+
             // Get original SyncKey for comparison
             const sOriginalSyncKey = oOriginalProduct.SyncKey || oOriginalProduct._id;
 
@@ -559,6 +587,12 @@ sap.ui.define([
                 FamilyText: oFamilyItem ? oFamilyItem.FamilyText : "",
                 CategoryText: oCategoryItem ? oCategoryItem.CategoryText : "",
                 ProductGroupText: oProductGroupItem ? oProductGroupItem.ProductGroupText : "",
+                // CRITICAL: Preserve these fields for sync
+                SalesOrganization: oOriginalProduct.SalesOrganization || "",
+                DistributionChannel: oOriginalProduct.DistributionChannel || "",
+                Currency: oOriginalProduct.Currency || "EUR",
+                Customer: oFormData.competitorKey,
+                Assortment: oFormData.assortmentKey,
                 CollectedDate: new Date().toISOString(),
                 IsCollected: true
             };
