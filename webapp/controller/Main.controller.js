@@ -74,7 +74,9 @@ sap.ui.define([
 				const sServiceUrl = oManifest.uri;
 				oModel = new ODataModel({
 					serviceUrl: sServiceUrl,
-					useBatch: true
+					useBatch: true,
+					defaultCountMode: "Inline",
+					timeout: Constants.TIMING.ODATA_TIMEOUT
 				});
 				this.getOwnerComponent().setModel(oModel);
 			}
@@ -137,16 +139,20 @@ sap.ui.define([
 						// If user proceeds despite error, collected data will be lost
 					}
 				}
+
 				} catch (e) {
-					console.error("Error uploading collected products:", e);
+					console.error("Error processing collected products:", e);
+					// Continue with sync - this is not critical to fail the entire sync
 				}
 
 				// Reset PouchDB and download fresh data
+				// Only reached if upload succeeded OR user confirmed proceeding despite failures
 				try {
-					await db.destroy();
-					console.log("PouchDB destroyed for fresh sync");
+					await DatabaseService.destroyAndRecreate();
+					console.log("Database reset for fresh sync");
 				} catch (e) {
-					console.error("Error destroying PouchDB:", e);
+					console.error("Error resetting database:", e);
+					throw e; // Re-throw to prevent partial sync state
 				}
 
 				await this._delay(50);
@@ -180,7 +186,22 @@ sap.ui.define([
 
 			} catch (error) {
 				console.error("Sync failed:", error);
-				MessageBox.error(this.getResourceBundle().getText("SyncFailedTitle"));
+
+				// Determine if error is timeout-related
+				const isTimeout = error.statusCode === 0 ||
+											  error.message?.includes("timeout") ||
+											  error.message?.includes("Timeout") ||
+											  error.errors?.[0]?.isTimeout;
+
+				if (isTimeout) {
+					const timeoutSeconds = Constants.TIMING.ODATA_TIMEOUT / 1000;
+					MessageBox.error(
+						this.getResourceBundle().getText("SyncTimeoutError", [timeoutSeconds]), {
+						title: this.getResourceBundle().getText("SyncTimeoutTitle")
+					});
+				} else {
+					MessageBox.error(this.getResourceBundle().getText("SyncFailedTitle"));
+				}
 			} finally {
 				this.getView().setBusy(false);
 			}
@@ -499,12 +520,21 @@ sap.ui.define([
 					error: (oError) => {
 						console.error("Batch upload failed:", oError);
 						results.failed = productsArray.length;
-						results.errors.push({
-							error: oError.message || oError.toString(),
-							isCritical: true
-						});
-						reject(results);
-					}
+
+						// Check if error is timeout-related
+						const isTimeout = oError.statusCode === 0 ||
+										  oError.message?.includes("timeout") ||
+										  oError.message?.includes("Timeout");
+
+					results.errors.push({
+						error: isTimeout
+							? this.getResourceBundle().getText("NetworkTimeoutMessage")
+							: (oError.message || oError.toString()),
+						isCritical: true,
+						isTimeout: isTimeout
+					});
+					reject(results);
+				}
 				});
 
 				// Reset deferred groups after submission

@@ -137,3 +137,37 @@
         max-width: 100% !important;
     }
 }
+
+/* ============================================================ */
+/* COLLECTED PRICES - IMPROVED ROW LAYOUT                       */
+/* ============================================================ */
+
+/* Intro text (collection date) styling */
+#collectedPriceItem .sapMObjLItemIntro {
+    color: #6a6d70;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Promotional price marker highlighting */
+#promoMarker {
+    color: #d14343 !important;
+}
+
+/* Promotional price attribute highlighting */
+#promoPriceAttribute .sapMObjectAttributeText {
+    color: #d14343 !important;
+    font-weight: 600 !important;
+}
+
+#promoPriceAttribute .sapMObjectAttributeTitle {
+    color: #d14343 !important;
+    font-weight: 600 !important;
+}
+
+/* Add subtle divider effect before attributes section */
+#collectedPriceItem .sapMObjLAttributes {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+}

@@ -85,7 +85,8 @@ sap.ui.define([], function () {
 			NAVIGATION_DELAY: 300,
 			POUCHDB_SYNC_DELAY: 50,
 			RECENT_CREATION_THRESHOLD: 10000,
-			MAX_RETRIES: 3
+			MAX_RETRIES: 3,
+			ODATA_TIMEOUT: 30000  // 30 seconds for OData requests
 		},
 
 		/**

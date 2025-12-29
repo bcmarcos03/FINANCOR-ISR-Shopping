@@ -2,6 +2,7 @@
     controllerName="com.financor.sd.shoppingapp.controller.Collect.CollectedPrices"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     displayBlock="true"
 >
     <Page
@@ -54,56 +55,68 @@
                 id="collectedPricesList"
                 items="{collectedModel>/items}"
                 noDataText="{i18n>NoCollectedPrices}"
-                mode="SingleSelectMaster"
-                itemPress=".onItemPress"
+                mode="Delete"
+                delete=".onDeleteItem"
             >
                 <items>
                     <ObjectListItem
+                        id="collectedPriceItem"
                         title="{collectedModel>MaterialDescription}"
+                        intro="{
+                            path: 'collectedModel>CollectedDate',
+                            formatter: '.formatCollectedDate'
+                        }"
                         number="{
                             path: 'collectedModel>NormalPrice',
                             formatter: '.formatPrice'
                         }"
                         numberUnit="EUR"
                         type="Active"
+                        press=".onItemPress"
+                        introTextDirection="Inherit"
                     >
                         <firstStatus>
                             <ObjectStatus
+                                id="customerStatus"
                                 text="{collectedModel>CustomerName}"
                                 state="Information"
                             />
                         </firstStatus>
-                        <secondStatus>
-                            <ObjectStatus
-                                text="{
-                                    path: 'collectedModel>CollectedDate',
-                                    formatter: '.formatCollectedDate'
-                                }"
-                                state="Success"
+                        <markers>
+                            <ObjectMarker
+                                id="promoMarker"
+                                type="{= ${collectedModel>PromoPrice} ? 'Flagged' : '' }"
+                                visibility="{= ${collectedModel>PromoPrice} ? 'IconAndText' : 'IconOnly' }"
                             />
-                        </secondStatus>
+                        </markers>
                         <attributes>
                             <ObjectAttribute
+                                id="areaAttribute"
                                 title="{i18n>AreaLabel}"
                                 text="{collectedModel>AreaText}"
                             />
                             <ObjectAttribute
+                                id="divisionAttribute"
                                 title="{i18n>DivisionLabel}"
                                 text="{collectedModel>DivisionText}"
                             />
                             <ObjectAttribute
+                                id="familyAttribute"
                                 title="{i18n>FamilyLabel}"
                                 text="{collectedModel>FamilyText}"
                             />
                             <ObjectAttribute
+                                id="categoryAttribute"
                                 title="{i18n>CategoryLabel}"
                                 text="{collectedModel>CategoryText}"
                             />
                             <ObjectAttribute
+                                id="brandAttribute"
                                 title="{i18n>BrandLabel}"
                                 text="{collectedModel>Brand}"
                             />
                             <ObjectAttribute
+                                id="promoPriceAttribute"
                                 title="{i18n>PromoPriceLabel}"
                                 text="{
                                     path: 'collectedModel>PromoPrice',
@@ -119,6 +132,14 @@
 
         <footer>
             <OverflowToolbar>
+                <Button
+                    id="btnDeleteAll"
+                    text="{i18n>DeleteAllButton}"
+                    icon="sap-icon://delete"
+                    type="Reject"
+                    press=".onDeleteAll"
+                    enabled="{= ${collectedModel>/count} > 0 }"
+                />
                 <ToolbarSpacer />
                 <Label text="{i18n>TotalCollected}:" />
                 <ObjectNumber

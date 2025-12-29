@@ -10,7 +10,8 @@
       "Bash(do tail -5 \"$file\")",
       "Bash(done)",
       "Bash(cat:*)",
-      "Bash(node -c:*)"
+      "Bash(node -c:*)",
+      "Bash(python:*)"
     ]
   }
 }
