@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: http: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: blob: http: https:; font-src 'self' data:; connect-src 'self' http: https: http://192.168.40.171:8000; media-src 'self' blob:; frame-src 'self';">
     <title>Shopping App</title>
     <style>
         html, body, body > div, #container, #container-uiarea {
             height: 100%;
         }
     </style>
-    <script src="/libs/pouchdb/pouchdb.min.js"></script>
-    <script src="/libs/pouchdb/pouchdb.find.min.js"></script>
-    <script src="/libs/quagga/quagga.min.js"></script>
+    <script src="libs/pouchdb/pouchdb.min.js"></script>
+    <script src="libs/pouchdb/pouchdb.find.min.js"></script>
+    <script src="libs/quagga/quagga.min.js"></script>
     <script
         id="sap-ui-bootstrap"
         src="resources/sap-ui-core.js"
@@ -35,5 +36,24 @@
         data-settings='{"id" : "com.financor.sd.shoppingapp"}'
         data-handle-validation="true"
     ></div>
+
+    <!-- Service Worker Registration (disabled in Cordova) -->
+    <script>
+        // Don't register Service Worker in Cordova (localhost protocol indicates Cordova)
+        // Service Worker is only for web browsers, Cordova handles caching natively
+        if ('serviceWorker' in navigator &&
+            window.location.protocol !== 'file:' &&
+            window.location.hostname !== 'localhost') {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registered:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('ServiceWorker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

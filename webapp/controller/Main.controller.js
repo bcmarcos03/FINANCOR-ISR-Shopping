@@ -66,7 +66,21 @@ sap.ui.define([
 			}
 
 			this.getView().setBusy(true);
-			try {				
+
+			// SAFEGUARD: Absolute maximum timeout to guarantee UI cleanup
+			const maxTimeoutMs = Constants.TIMING.ODATA_TIMEOUT * 2; // 60 seconds
+			const safeguardTimer = setTimeout(() => {
+				console.error("[SYNC] Safeguard timeout triggered - forcing UI cleanup");
+				this.getView().setBusy(false);
+				MessageBox.error(
+					this.getResourceBundle().getText("SyncForceTimeoutError", [maxTimeoutMs / 1000]),
+					{ title: this.getResourceBundle().getText("SyncTimeoutTitle") }
+				);
+			}, maxTimeoutMs);
+
+			let diagnostics = null;
+
+			try {
 				// Create OData model on-demand (only when syncing)
 			let oModel = this.getOwnerComponent().getModel();
 			if (!oModel) {
@@ -81,7 +95,10 @@ sap.ui.define([
 				this.getOwnerComponent().setModel(oModel);
 			}
 			let uploadResult = { success: 0, failed: 0, errors: [] };
-				
+
+			// Perform network diagnostics before attempting metadata load
+			const oManifest = this.getOwnerComponent().getManifestEntry("/sap.app/dataSources/mainService");
+			diagnostics = await this._performNetworkDiagnostics(oManifest.uri);
 
 				const db = DatabaseService.getDB();
 
@@ -118,17 +135,32 @@ sap.ui.define([
 								title: "Erro de Sincronização"
 							});
 
+							clearTimeout(safeguardTimer);
 							this.getView().setBusy(false);
 							return;
 						}
 
-						// Ensure OData metadata is loaded before creating entries
-						await new Promise((resolve, reject) => {
+						// CRITICAL: Ensure OData metadata is loaded with EXPLICIT timeout
+						console.log("[SYNC] Waiting for OData metadata to load...");
+
+						const metadataPromise = new Promise((resolve, reject) => {
 							oModel.metadataLoaded().then(() => {
 								console.log("[SYNC] OData metadata loaded successfully");
 								resolve();
-							}).catch(reject);
+							}).catch((metadataError) => {
+								console.error("[SYNC] Metadata loading failed:", metadataError);
+								reject(metadataError);
+							});
 						});
+
+						// Wrap with explicit timeout to prevent hanging
+						await this._promiseWithTimeout(
+							metadataPromise,
+							Constants.TIMING.ODATA_TIMEOUT,
+							"Metadata Loading"
+						);
+
+						console.log("[SYNC] Metadata loaded, proceeding with upload");
 
 						// Show progress to user
 						MessageToast.show(this.getResourceBundle().getText("SendingPricesMessage", [productsToUpdate.docs.length]));
@@ -160,6 +192,7 @@ sap.ui.define([
 						// Critical error - ask user whether to continue
 						const proceed = await this._confirmUploadFailure(uploadError, productsToUpdate.docs.length);
 						if (!proceed) {
+							clearTimeout(safeguardTimer);
 							this.getView().setBusy(false);
 							return; // User cancelled - keep collected data
 						}
@@ -212,26 +245,187 @@ sap.ui.define([
 				this._loadPendingSyncCount();
 
 			} catch (error) {
-				console.error("Sync failed:", error);
+				console.error("[SYNC] Sync failed:", error);
 
-				// Determine if error is timeout-related
-				const isTimeout = error.statusCode === 0 ||
-											  error.message?.includes("timeout") ||
-											  error.message?.includes("Timeout") ||
-											  error.errors?.[0]?.isTimeout;
+				// Classify error and show appropriate message
+				const classification = this._classifyError(error, diagnostics || {});
+				const timeoutSeconds = Constants.TIMING.ODATA_TIMEOUT / 1000;
 
-				if (isTimeout) {
-					const timeoutSeconds = Constants.TIMING.ODATA_TIMEOUT / 1000;
-					MessageBox.error(
-						this.getResourceBundle().getText("SyncTimeoutError", [timeoutSeconds]), {
-						title: this.getResourceBundle().getText("SyncTimeoutTitle")
-					});
-				} else {
-					MessageBox.error(this.getResourceBundle().getText("SyncFailedTitle"));
-				}
+				this._showSyncError(classification, diagnostics || {}, timeoutSeconds);
+
 			} finally {
+				// Clear safeguard timer
+				clearTimeout(safeguardTimer);
+
+				// Always remove busy state
 				this.getView().setBusy(false);
+				console.log("[SYNC] Sync operation completed, UI cleanup done");
 			}
+		},
+
+		/**
+		 * Wraps a promise with an explicit timeout
+		 * @param {Promise} promise - Promise to wrap
+		 * @param {number} timeoutMs - Timeout in milliseconds
+		 * @param {string} operationName - Name of operation for error messages
+		 * @returns {Promise} Promise that rejects on timeout
+		 * @private
+		 */
+		_promiseWithTimeout: function(promise, timeoutMs, operationName) {
+			return Promise.race([
+				promise,
+				new Promise((_, reject) => {
+					setTimeout(() => {
+						reject({
+							isTimeout: true,
+							operation: operationName,
+							timeoutMs: timeoutMs,
+							message: `${operationName} exceeded timeout of ${timeoutMs}ms`,
+							statusCode: 0
+						});
+					}, timeoutMs);
+				})
+			]);
+		},
+
+		/**
+		 * Performs network diagnostics to help identify connectivity issues
+		 * @param {string} serviceUrl - Backend service URL
+		 * @returns {Promise<object>} Diagnostic information
+		 * @private
+		 */
+		_performNetworkDiagnostics: async function(serviceUrl) {
+			const diagnostics = {
+				timestamp: new Date().toISOString(),
+				navigatorOnline: navigator.onLine,
+				connectionType: navigator.connection?.effectiveType || "unknown",
+				isCordova: !!window.cordova,
+				serviceUrl: serviceUrl,
+				userAgent: navigator.userAgent,
+				platform: window.device?.platform || "browser"
+			};
+
+			console.log("[NETWORK DIAGNOSTICS]", JSON.stringify(diagnostics, null, 2));
+
+			return diagnostics;
+		},
+
+		/**
+		 * Classifies an error and returns appropriate user message
+		 * @param {object} error - Error object from OData or timeout
+		 * @param {object} diagnostics - Network diagnostics
+		 * @returns {object} Classification with message key and details
+		 * @private
+		 */
+		_classifyError: function(error, diagnostics) {
+			const classification = {
+				type: "unknown",
+				messageKey: "SyncFailedTitle",
+				details: [],
+				showDiagnostics: false
+			};
+
+			// Check for timeout
+			if (error.isTimeout ||
+				error.statusCode === 0 ||
+				error.message?.toLowerCase().includes("timeout")) {
+				classification.type = "timeout";
+				classification.messageKey = "SyncTimeoutError";
+				classification.showDiagnostics = true;
+				classification.details.push("Operation timed out");
+			}
+
+			// Check for network unreachable (typical in emulator)
+			else if (error.statusCode === 0 ||
+					 error.message?.toLowerCase().includes("network") ||
+					 error.message?.toLowerCase().includes("connection") ||
+					 error.message?.toLowerCase().includes("failed to fetch")) {
+				classification.type = "network_unreachable";
+				classification.messageKey = "NetworkUnreachableError";
+				classification.showDiagnostics = true;
+				classification.details.push("Cannot reach backend server");
+
+				// Add emulator-specific hints
+				if (diagnostics.isCordova && diagnostics.platform === "Android") {
+					classification.details.push("Android emulator may not route to backend IP");
+					classification.details.push("Backend URL: " + diagnostics.serviceUrl);
+				}
+			}
+
+			// HTTP error (backend reachable but returns error)
+			else if (error.statusCode >= 400) {
+				classification.type = "http_error";
+				classification.messageKey = "SyncHttpError";
+				classification.details.push(`HTTP ${error.statusCode}: ${error.message || "Unknown error"}`);
+			}
+
+			// Generic error
+			else {
+				classification.type = "unknown";
+				classification.details.push(error.message || error.toString());
+			}
+
+			return classification;
+		},
+
+		/**
+		 * Shows detailed error message with optional diagnostics
+		 * @param {object} classification - Error classification
+		 * @param {object} diagnostics - Network diagnostics
+		 * @param {number} timeoutSeconds - Timeout value used
+		 * @private
+		 */
+		_showSyncError: function(classification, diagnostics, timeoutSeconds) {
+			const resourceBundle = this.getResourceBundle();
+			let message = "";
+			let title = "";
+
+			// Build message based on error type
+			switch (classification.type) {
+				case "timeout":
+					title = resourceBundle.getText("SyncTimeoutTitle");
+					message = resourceBundle.getText("SyncTimeoutError", [timeoutSeconds]);
+					break;
+
+				case "network_unreachable":
+					title = resourceBundle.getText("NetworkUnreachableTitle");
+					message = resourceBundle.getText("NetworkUnreachableError");
+					break;
+
+				case "http_error":
+					title = resourceBundle.getText("SyncHttpErrorTitle");
+					message = resourceBundle.getText("SyncHttpError");
+					break;
+
+				default:
+					title = resourceBundle.getText("SyncFailedTitle");
+					message = resourceBundle.getText("SyncFailedMessage");
+			}
+
+			// Add technical details if diagnostics should be shown
+			if (classification.showDiagnostics && classification.details.length > 0) {
+				message += "\n\n" + resourceBundle.getText("TechnicalDetails") + ":\n";
+				message += classification.details.join("\n");
+
+				// Add network info for emulator issues
+				if (diagnostics.isCordova) {
+					message += "\n\n" + resourceBundle.getText("NetworkInfo") + ":\n";
+					message += `Platform: ${diagnostics.platform}\n`;
+					message += `Connection: ${diagnostics.connectionType}\n`;
+					message += `Backend: ${diagnostics.serviceUrl}`;
+				}
+			}
+
+			MessageBox.error(message, {
+				title: title,
+				actions: [MessageBox.Action.CLOSE, resourceBundle.getText("RetrySync")],
+				emphasizedAction: MessageBox.Action.CLOSE,
+				onClose: (action) => {
+					if (action === resourceBundle.getText("RetrySync")) {
+						this.onPressSync();
+					}
+				}
+			});
 		},
 
 		_loadPendingSyncCount: async function () {

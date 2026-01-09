@@ -13,3 +13,10 @@ USER_GUIDE.md
 .claude/settings.local.json
 .claude/settings.json
 .claude/
+# Cordova
+platforms/
+plugins/
+www/
+# Signing
+*.keystore
+build.json

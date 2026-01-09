@@ -17,6 +17,14 @@ framework:
     - name: sap.ui.table
     - name: sap.ushell
     - name: themelib_sap_horizon
+builder:
+  resources:
+    excludes:
+      - "/test/**"
+      - "/localService/**"
+  settings:
+    includeDependency: ["*"]
+    includeDependencyTree: ["*"]
 server:
   customMiddleware:
     - name: fiori-tools-appreload

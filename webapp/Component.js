@@ -21,6 +21,22 @@ sap.ui.define([
              * @override
              */
             init: function () {
+                // Wait for Cordova deviceready event
+                if (window.cordova) {
+                    document.addEventListener('deviceready', () => {
+                        this._initializeApp();
+                    }, false);
+                } else {
+                    // Web browser mode
+                    this._initializeApp();
+                }
+            },
+
+            /**
+             * Initialize the application after Cordova is ready (or immediately in browser mode)
+             * @private
+             */
+            _initializeApp: function() {
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
@@ -32,6 +48,39 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+                // Initialize Cordova-specific features
+                if (window.cordova) {
+                    this._initCordovaFeatures();
+                }
+            },
+
+            /**
+             * Initialize Cordova-specific features (StatusBar, SplashScreen, Network monitoring)
+             * @private
+             */
+            _initCordovaFeatures: function() {
+                // Configure StatusBar
+                if (window.StatusBar) {
+                    window.StatusBar.styleDefault();
+                    window.StatusBar.backgroundColorByHexString('#0070F2');
+                }
+
+                // Hide splash screen after app loads
+                if (navigator.splashscreen) {
+                    setTimeout(() => {
+                        navigator.splashscreen.hide();
+                    }, 1000);
+                }
+
+                // Monitor network status
+                document.addEventListener('offline', () => {
+                    sap.m.MessageToast.show('Modo offline ativado');
+                }, false);
+
+                document.addEventListener('online', () => {
+                    sap.m.MessageToast.show('Conexão restaurada');
+                }, false);
             },
 
             /**
